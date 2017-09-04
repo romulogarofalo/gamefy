@@ -4,8 +4,11 @@ FlowRouter.triggers.enter([function(context, redirect){
     }
 }])
 
+
 Accounts.onLogin(function(){
-    FlowRouter.go('main');
+    if(Meteor.loggingIn()){
+        FlowRouter.go('main');
+    }
 })
 
 AccountsTemplates.configureRoute('signIn', {
@@ -16,6 +19,13 @@ AccountsTemplates.configureRoute('signIn', {
 FlowRouter.route('/main', {
     name:'main',
     action(){ 
-        BlazeLayout.render('MainLayout', {main: 'Classes'});
+        BlazeLayout.render('MainLayout', {main: 'ClassList'});
     }
-})
+});
+
+FlowRouter.route('/class/:id', {
+    name:'class',
+    action(){ 
+        BlazeLayout.render('MainLayout', {main: 'ClassSingle'});
+    }
+});

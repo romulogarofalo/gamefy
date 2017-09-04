@@ -24,6 +24,10 @@ kadira:flow-router
 useraccounts:flow-routing
 accounts-password
 kadira:blaze-layout
-aldeed:collection2
-aldeed:collection2-core
+aldeed:collection2-core@2.0.1
 softwarerero:accounts-t9n
+aldeed:autoform
+gildaspk:autoform-materialize
+meteorstuff:materialize-modal
+session
+zimme:active-route

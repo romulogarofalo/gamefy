@@ -4,17 +4,13 @@ AccountsTemplates.configure({
   defaultLayout: 'HomeLayout',
   defaultContentRegion: 'main',
   defaultLayoutRegions: {},
+  continuousValidation: true,
 });
-
-
-AccountsTemplates.configure({
-    continuousValidation: true,
-})
 
 AccountsTemplates.addFields([
      {
         _id: 'role',
-        type: 'radio',
+        type: 'select',
         displayName: 'Você é?',
         required: true,
         select: [
