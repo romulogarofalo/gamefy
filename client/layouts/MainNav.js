@@ -1,6 +1,6 @@
 
 Template.MainNav.events({ 
     'click .logout': ()=>{ 
-         AccountsTemplates.logout();
+         FlowRouter.go('/logout');
     } 
 }); 

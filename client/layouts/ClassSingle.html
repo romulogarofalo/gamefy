@@ -1,3 +1,7 @@
 <template name="ClassSingle">
     <h1> {{class.name}} </h1>
+    <div class="card-panel grey lighten-4">
+        {{> ClassTabs}}
+        {{> Template.dynamic template=tab data=tabData}}
+    </div>
 </template>

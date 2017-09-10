@@ -3,7 +3,9 @@ Template.ClassList.onCreated(function() {
     self.autorun(function() { 
         self.subscribe('classes');
     }); 
-    Session.setDefault('skip', 0);
+    this.state = new ReactiveDict();
+    const instance = Template.instance();
+    instance.state.set('skip', 0);
 });
 
 
@@ -11,30 +13,50 @@ Template.ClassList.onCreated(function() {
 Template.ClassList.helpers({
     
   classes() {
-        return Classes.find({}, {limit: 3, skip: Session.get('skip')});
+        const instance = Template.instance();
+        return Classes.find({}, {limit: 3, skip: instance.state.get('skip')});
     },
+
+  hasClasses(){
+       return Classes.find({}).count() > 0;
+  },
+
+  prevClasses(){
+      const instance = Template.instance();
+      return function(){
+        if(instance.state.get('skip') >= 3)
+        {
+            instance.state.set('skip',instance.state.get('skip') - 3);
+        }
+      }
+  },
+
+  nextClasses(){
+      const instance = Template.instance();
+      return function(){
+          if(instance.state.get('skip') + 3 < Classes.find({}).count()){
+            instance.state.set('skip', instance.state.get('skip') + 3);
+         }
+      }
+  }
+
 });
 
 $(document).ready(function() {
     $('.modal').modal();
-    console.log('iniciado');
 });
 
-Template.ClassList.events({ 
+Template.ClassListButtons.events({ 
     'click .add-class'() { 
          $('#modal1').modal('open');
     },
 
-    'click .previous'(event){
-        if(Session.get('skip') >= 3){
-        Session.set('skip',Session.get('skip') - 3);
-        }
+    'click .previous'(event, instance){
+        instance.data.previous();
     },
 
-    'click .next'(event){
-        if(Session.get('skip') + 3 < Classes.find({}).count()){
-        Session.set('skip',Session.get('skip') + 3);
-        }
+    'click .next'(event, instance){
+        instance.data.next();
     },
 
 });

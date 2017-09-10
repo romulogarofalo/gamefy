@@ -30,10 +30,10 @@ Classes.attachSchema(ClassSchema);
 
 Meteor.methods({ 
     'classes.insert'(new_class) {
-        if (! Meteor.userId()) {
+        if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher'])){
         throw new Meteor.Error('not-authorized');
         }
-
+        
         Classes.insert(new_class);
     } 
 });
