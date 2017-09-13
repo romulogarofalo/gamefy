@@ -14,7 +14,14 @@
     {{else}}
         <h1>Você ainda não{{#if isInRole 'teacher'}} criou {{else}} está inscrito em{{/if}} nenhuma classe</h1>
     {{/if}}
-        {{> ClassListButtons hasClasses=hasClasses previous=prevClasses next=nextClasses}}
+        <div class="row">
+            {{> PageButtons hasClasses=hasClasses previous=prevClasses next=nextClasses}}
+            <div class="{{#if hasClasses}}col s12 m4 l4{{/if}}">
+            {{#if isInRole 'teacher'}}
+                {{> AddButton add=addClass}}
+            {{/if}}
+            </div>
+        </div>
     </div>
 {{/if}}
 </template>

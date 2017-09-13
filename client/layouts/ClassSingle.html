@@ -1,7 +1,13 @@
 <template name="ClassSingle">
     <h1> {{class.name}} </h1>
+    {{#if isInRole 'teacher'}}
+        {{> NewEnrollment}}
+    {{/if}}
     <div class="card-panel grey lighten-4">
-        {{> ClassTabs}}
-        {{> Template.dynamic template=tab data=tabData}}
+        <div class="row">
+            {{> ClassTabs}}
+            {{> Template.dynamic template=tab data=tabData}}
+            {{> AddButton add=addEnrollment}}
+        </div>
     </div>
 </template>

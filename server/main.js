@@ -5,7 +5,6 @@ Meteor.startup(() => {
 });
 
 
-
 AccountsTemplates.configure({
   postSignUpHook: function(userId, info){
     let user = Meteor.users.findOne({_id: userId});

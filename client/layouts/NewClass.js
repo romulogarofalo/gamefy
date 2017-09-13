@@ -12,16 +12,22 @@ Template.ClassList.onCreated(function() {
 
 Template.ClassList.helpers({
     
-  classes() {
+  classes:()=> {
         const instance = Template.instance();
         return Classes.find({}, {limit: 3, skip: instance.state.get('skip')});
     },
 
-  hasClasses(){
+  hasClasses: ()=>{
        return Classes.find({}).count() > 0;
   },
 
-  prevClasses(){
+  addClass: ()=>{
+      return function(){
+        $('#new-class').modal('open');
+      }
+  },
+
+  prevClasses: ()=>{
       const instance = Template.instance();
       return function(){
         if(instance.state.get('skip') >= 3)
@@ -31,7 +37,7 @@ Template.ClassList.helpers({
       }
   },
 
-  nextClasses(){
+  nextClasses: ()=>{
       const instance = Template.instance();
       return function(){
           if(instance.state.get('skip') + 3 < Classes.find({}).count()){
@@ -44,21 +50,6 @@ Template.ClassList.helpers({
 
 $(document).ready(function() {
     $('.modal').modal();
-});
-
-Template.ClassListButtons.events({ 
-    'click .add-class'() { 
-         $('#modal1').modal('open');
-    },
-
-    'click .previous'(event, instance){
-        instance.data.previous();
-    },
-
-    'click .next'(event, instance){
-        instance.data.next();
-    },
-
 });
 
 

@@ -7,6 +7,7 @@ Template.ClassSingle.onCreated(function() {
         self.subscribe('classes');
     }); 
     this.state = new ReactiveDict();
+    this.state.set('currentTab', 'Students');
 });
 
 
@@ -18,18 +19,24 @@ Template.ClassSingle.onRendered(function() {
 
 Template.ClassSingle.helpers({ 
 
-  tab: ()=> {
-    const instance = Template.instance();
-    var tab = instance.state.get('currentTab');
-    tab = tab.charAt(0).toUpperCase() + tab.slice(1);
-    console.log(tab);
-    return tab;
-  },
+    tab: ()=> {
+        const instance = Template.instance();
+        var tab = instance.state.get('currentTab');
+        tab = tab.charAt(0).toUpperCase() + tab.slice(1);
+        console.log(tab);
+        return tab;
+    },
 
-  class: ()=>{
-        var id = FlowRouter.getParam('id');
+    class: ()=>{
+        const id = FlowRouter.getParam('id');
         return Classes.findOne({_id: id});
     },
+
+    addEnrollment: ()=>{
+        return function(){
+        $('#new-enrollment').modal('open');
+      }
+    }
 });
 
 Template.ClassSingle.events({ 

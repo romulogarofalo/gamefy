@@ -1,3 +1,9 @@
 <template name="Students">
-    <h1>EEEEEEEEEEEEEE</h1>
+    
+    <div class="collection">
+    <div class="collection-header"><h4>Alunos</h4></div>
+    {{#each students}}
+         {{> Student}}
+    {{/each}}
+    </div>
 </template>
