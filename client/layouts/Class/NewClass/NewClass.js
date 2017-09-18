@@ -23,6 +23,15 @@ Template.ClassList.events({
         document.querySelector('#nomeClasse').value = nome;
         document.querySelector('#descricaoClasse').value = descr;
         $('#nomeClasse').focus();
+    },
+
+    'click .red-text': function (event, intance) {
+        var sala = this.name;
+        if(confirm("Deseja mesmo deletar a classe "+ sala))
+        {
+        Meteor.call('classes.delete', this._id);
+        Materialize.toast('Classe Excluida com Sucesso!', 3000);
+        }
     }
 
 });
@@ -80,7 +89,7 @@ Template.NewClass.events({
         const new_class = { name: target.name.value, description: target.description.value };
         Meteor.call('classes.insert', new_class);
         template.find(".new-class-form").reset();
-        $('#modal1').modal('close');
+        $('#new_class').modal('close');
 
     }
 });

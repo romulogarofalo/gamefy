@@ -10,9 +10,7 @@ Template.EditClass.events({
         let desc = $('#descricaoClasse').val();
         let idClasse = document.querySelector('#spanId').textContent;
         Meteor.call('classes.update', nome,desc,idClasse);
-        //template.find(".edit-class-form").reset();
-        document.querySelector('#nomeClasse').value = "";
-        document.querySelector('#descricaoClasse').value = "";
+        template.find(".edit-class-form").reset();
         $('#edit-class').modal('close');
 
     }
