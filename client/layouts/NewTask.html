@@ -1,0 +1,18 @@
+<template name="NewTask">
+    <div id="new-task" class="modal">
+        <div class="modal-content">
+            <h4>Nova tarefa</h4>
+            <form class="new-task-form">
+                <input type="text" name="name" placeholder="Nome da tarefa" />
+                <div class="input-field">
+                    <textarea id="descricao" name="description" class="materialize-textarea"></textarea>
+                    <label for="descricao">Descrição</label>
+                </div>
+                <input type="number" name="points" placeholder="Pontos (Maximo de 1000)" min="0" step="1" max="1000"/>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+        </div>
+    </div>
+</template>

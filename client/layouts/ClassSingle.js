@@ -31,12 +31,6 @@ Template.ClassSingle.helpers({
         const id = FlowRouter.getParam('id');
         return Classes.findOne({_id: id});
     },
-
-    addEnrollment: ()=>{
-        return function(){
-        $('#new-enrollment').modal('open');
-      }
-    }
 });
 
 Template.ClassSingle.events({ 

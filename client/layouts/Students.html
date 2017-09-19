@@ -1,9 +1,19 @@
 <template name="Students">
-    
+    <a class="waves-effect waves-light btn alphabetic {{#if isAlphabetic}}disabled{{/if}}">A-Z</a>
+    <a class="waves-effect waves-light btn ranking {{#if isRanking}}disabled{{/if}}">Ranking</a>
     <div class="collection">
-    <div class="collection-header"><h4>Alunos</h4></div>
-    {{#each students}}
-         {{> Student}}
-    {{/each}}
+            <div class="collection-header">
+                <h4>Alunos</h4>
+            </div>
+            {{#if isAlphabetic}}
+                {{#each studentsAlphabetic}}
+                    {{> Student}}
+                {{/each}}
+            {{else}}
+                {{#each studentsRanking}}
+                    {{> Student}}
+                {{/each}}
+            {{/if}}
     </div>
+    {{> AddButton add=addEnrollment}}
 </template>

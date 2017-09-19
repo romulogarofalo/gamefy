@@ -9,3 +9,9 @@ Meteor.publish('students', function(class_id) {
         class_id: class_id
     });    
 });
+
+Meteor.publish('tasks', function(class_id) {
+    return Tasks.find({
+        class_id: class_id
+    });    
+});

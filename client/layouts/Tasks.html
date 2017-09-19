@@ -1,3 +1,15 @@
-<template name="Tasks">
-    <h1>Tarefas</h1>
+<template name="Tasks"> 
+    <div class="collection scrollable">
+        <div class="collection-header">
+             <h4>Tarefas</h4>
+        </div>
+    {{#each tasks}}
+        <a href="#!" class="collection-item">
+            <span class="title">{{name}}</span>
+            <p>{{points}} </p>
+            
+        </a>
+    {{/each}}
+    </div>
+    {{> AddButton add=addTask}}
 </template>

@@ -11,12 +11,14 @@ ClassSchema = new SimpleSchema({
     description: {
         type: String,
     },
+    
     owner:{
         type: String,
         autoValue: function(){
             return this.userId
         }
     },
+
     createdAt:{
         type: Date,
         autoValue: function(){
