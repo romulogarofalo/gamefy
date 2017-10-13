@@ -4,12 +4,14 @@
              <h4>Tarefas</h4>
         </div>
     {{#each tasks}}
-        <a href="#!" class="collection-item">
+        <a href="/task/{{_id}}" class="collection-item">
             <span class="title">{{name}}</span>
             <p>{{points}} </p>
             
         </a>
     {{/each}}
     </div>
-    {{> AddButton add=addTask}}
+    {{#if isInRole 'teacher'}}
+        {{> AddButton add=addTask}}
+    {{/if}}
 </template>

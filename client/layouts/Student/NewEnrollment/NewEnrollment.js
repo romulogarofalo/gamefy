@@ -9,9 +9,13 @@ Template.NewEnrollment.events({
     const current_class = Classes.findOne({_id: id});
     const new_enrollment = {student_name: target.name.value, class_id: current_class._id};
     Meteor.call('enrollments.insert', new_enrollment, (error, result) => {
-        if(!error){
+        if(error){
+            $('#student-name').addClass('invalid');
+        }
+        else{
             $('#new-enrollment').modal('close');
             template.find(".new-enrollment-form").reset();
+
         }
     });
          

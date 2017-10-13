@@ -22,3 +22,11 @@ FlowRouter.route('/class/:id', {
         BlazeLayout.render('MainLayout', {main: 'ClassSingle'});
     }
 });
+
+FlowRouter.route('/task/:task_id', {
+    name:'task',
+    action(){
+        console.log('oi');
+        BlazeLayout.render('MainLayout', {main: 'TaskSingle'});
+    }
+});

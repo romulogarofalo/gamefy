@@ -13,10 +13,12 @@
                 <span class="card-title">Nome: {{name}}<i class="material-icons right">close</i></span>
                 <p>Descrição: {{description}}</p>
             </div>
+            {{#if isInRole 'teacher'}}
             <div class="card-action">
               <a class="waves-effect waves-teal red-text btn-flat">Excluir</a>
               <a class="waves-effect waves-teal  black-text btn-flat">Editar</a>
             </div>
+            {{/if}}
        </div>
     </div>
 </template>
