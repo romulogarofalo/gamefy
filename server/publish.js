@@ -1,9 +1,9 @@
 Meteor.publish('classes', function() {
-<<<<<<< HEAD
+
     return Classes.find({
         owner: this.userId
     });
-=======
+
     if (Roles.userIsInRole(this.userId, ['teacher'])) {
         return Classes.find({
             owner: this.userId
@@ -20,7 +20,7 @@ Meteor.publish('classes', function() {
             _id: {$in: classes_id}
         });
     }
->>>>>>> 57ba9a751e6dc0fd028387e85da7983b5416dbb9
+
 });
 
 Meteor.publish('students', function(class_id) {
@@ -32,7 +32,7 @@ Meteor.publish('students', function(class_id) {
 Meteor.publish('tasks', function(class_id) {
     return Tasks.find({
         class_id: class_id
-<<<<<<< HEAD
+
     });    
 });
 
@@ -41,11 +41,8 @@ Meteor.publish('broochs', function() {
         owner: this.userId
     });    
 });
-=======
-    });  
-});
+
 
 Meteor.publish('enrollment-task', function(task_id){
     return Enrollments.find({"tasks.task_id": task_id}, {fields: {student_name: 1, 'tasks.$': 1}});
 })  
->>>>>>> 57ba9a751e6dc0fd028387e85da7983b5416dbb9

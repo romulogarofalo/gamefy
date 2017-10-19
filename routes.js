@@ -23,7 +23,6 @@ FlowRouter.route('/class/:id', {
     }
 });
 
-<<<<<<< HEAD
 FlowRouter.route('/broochs', {
     name:'broochs',
     action(){ 
@@ -31,7 +30,7 @@ FlowRouter.route('/broochs', {
     }
 });
 
-=======
+
 FlowRouter.route('/task/:task_id', {
     name:'task',
     action(){
@@ -39,4 +38,4 @@ FlowRouter.route('/task/:task_id', {
         BlazeLayout.render('MainLayout', {main: 'TaskSingle'});
     }
 });
->>>>>>> 57ba9a751e6dc0fd028387e85da7983b5416dbb9
+

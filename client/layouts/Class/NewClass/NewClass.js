@@ -8,7 +8,6 @@ Template.ClassList.onCreated(function () {
     instance.state.set('skip', 0);
 });
 
-<<<<<<< HEAD
 Template.ClassList.events({
     'click .black-text': function (event, instance) {
         //alert('aqui');
@@ -36,8 +35,6 @@ Template.ClassList.events({
 
 });
 
-=======
->>>>>>> 57ba9a751e6dc0fd028387e85da7983b5416dbb9
 
 Template.ClassList.helpers({
 
