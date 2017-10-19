@@ -1,9 +1,9 @@
 import { check } from 'meteor/check';
 import SimpleSchema from 'simpl-schema';
 
-Classes = new Mongo.Collection('classes');
+Broochs = new Mongo.Collection('broochs');
 
-ClassSchema = new SimpleSchema({
+BroochSchema = new SimpleSchema({
     name: {
         type: String,
     },
@@ -11,7 +11,6 @@ ClassSchema = new SimpleSchema({
     description: {
         type: String,
     },
-    
     owner:{
         type: String,
         autoValue: function(){
@@ -24,35 +23,38 @@ ClassSchema = new SimpleSchema({
         autoValue: function(){
             return new Date()
         }
-
     }
 });
 
-Classes.attachSchema(ClassSchema);
+Broochs.attachSchema(BroochSchema);
 
-Meteor.methods({ 
-    'classes.insert'(new_class) {
-        if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher']))
-            throw new Meteor.Error('not-authorized');
-        
-        Classes.insert(new_class);
+Meteor.methods({
+
+    'brooch.insert'(nome,descricao) {
+        if (! Meteor.userId || !Roles.userIsInRole(Meteor.user(),['teacher'])) 
+            throw new Meteor.Error('not-autorized');
+        Brooch.insert({
+            name:nome,
+            description:descricao,
+        });
     },
-    'classes.update'(nome, descricao, id_class) {
+    'brooch.update'(nome, descricao, imagem, id_brooch) {
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
 
-        Classes.update({ _id: id_class }, {
+        Broochs.update({ _id: id_brooch }, {
             $set: {
                 name: nome,
-                description: descricao
+                description: descricao,
+                image: imagem
             }
         });
     },
 
-    'classes.delete'(id_class) {
+    'brooch.delete'(id_brooch) {
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
-        Classes.remove(id_class);
+        Broochs.remove(id_brooch);
     }
-
 });
+

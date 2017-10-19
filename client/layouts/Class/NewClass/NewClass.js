@@ -27,10 +27,9 @@ Template.ClassList.events({
 
     'click .red-text': function (event, intance) {
         var sala = this.name;
-        if(confirm("Deseja mesmo deletar a classe "+ sala))
-        {
-        Meteor.call('classes.delete', this._id);
-        Materialize.toast('Classe Excluida com Sucesso!', 3000);
+        if(confirm("Deseja mesmo deletar a classe "+ sala)){
+            Meteor.call('classes.delete', this._id);
+            Materialize.toast('Classe Excluida com Sucesso!', 3000);
         }
     }
 
