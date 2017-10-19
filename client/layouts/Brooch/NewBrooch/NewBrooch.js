@@ -41,15 +41,12 @@ Template.NewBrooch.events({
 		e.preventDefault();
     	console.log("form brooch");
 
-    	console.log(e.currentTarget);
-
-    	let nome = e.currentTarget.getElementsByTagName('input')[0];
-    	let descricao = e.currentTarget.getElementsByTagName('input')[0];
+        let nome = e.target.name;
+    	let descricao = e.target.description;
 
        // let imagem = e.currentTarget.getElementsByTagName('input')[2];
-
-    	Broochs.insert(nome,descricao);
-		//template.find("#new-brooch").reset();
+    	Meteor.call('brooch.insert', nome,descricao);
+		template.find(".new-brooch-form").reset();
 		console.log("foi");
 
 
