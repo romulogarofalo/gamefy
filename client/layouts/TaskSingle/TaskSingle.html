@@ -1,0 +1,25 @@
+<template name="TaskSingle">
+    {{#if Template.subscriptionsReady}}
+    <div class="card-panel grey lighten-4">
+        <div class="row"> 
+            <div class="collection scrollable">
+                <div class="collection-header">
+                    <h4>{{taskName.name}}</h4>
+                </div>
+                {{#each taskChecklist}}
+               <div class="collection-item">
+                    <span class="title">{{student_name}}</span>
+                    <div class="secondary-content">
+                        <input type="checkbox" id="{{_id}}" checked="{{taskDone _id}}" class="toggle-done" />
+                        <label for="{{_id}}"></label>
+                    </div>
+                    
+               </div>
+               {{/each}}
+            </div>
+        </div>
+    </div>
+    {{else}}
+        <span>Carregando</span>
+    {{/if}}
+</template>

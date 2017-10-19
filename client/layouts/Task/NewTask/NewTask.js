@@ -6,15 +6,17 @@ Template.NewTask.events({
  
     // Get value from form element
     const target = event.target;
+    console.log(event.target);
     const id = FlowRouter.getParam('id');
     const current_class = Classes.findOne({_id: id});
     const new_enrollment = {name: target.name.value, description: target.description.value, points: target.points.value, class_id: current_class._id};
     console.log(new_enrollment);
     Meteor.call('tasks.insert', new_enrollment, (error, result) => {
-        if(!error){
-            $('#new-task').modal('close');
-            template.find(".new-task-form").reset();
+            if(!error){
+                $('#new-task').modal('close');
+                template.find(".new-task-form").reset();
             }
+        
         });
          
     }

@@ -15,5 +15,7 @@
                 {{/each}}
             {{/if}}
     </div>
-    {{> AddButton add=addEnrollment}}
+    {{#if isInRole 'teacher'}}
+        {{> AddButton add=addEnrollment}}
+    {{/if}}
 </template>
