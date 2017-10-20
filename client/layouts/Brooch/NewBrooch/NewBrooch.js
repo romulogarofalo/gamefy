@@ -21,7 +21,7 @@ Template.BroochList.helpers({
 
 	brooch: () => {
 		const instance = Template.instance();
-		return Broochs.find({}, { limit:3, skip: intance.skip.get('skip')});
+		return Broochs.find({}, { limit:3, skip: instance.state.get('skip')});
 	},	
 
 	hasBrooch: () => {
@@ -41,8 +41,8 @@ Template.NewBrooch.events({
 		e.preventDefault();
     	console.log("form brooch");
 
-        let nome = e.target.name;
-    	let descricao = e.target.description;
+        let nome = e.target.name.value;
+    	let descricao = e.target.description.value;
 
        // let imagem = e.currentTarget.getElementsByTagName('input')[2];
     	Meteor.call('brooch.insert', nome,descricao);

@@ -33,7 +33,7 @@ Meteor.methods({
     'brooch.insert'(nome,descricao) {
         if (! Meteor.userId || !Roles.userIsInRole(Meteor.user(),['teacher'])) 
             throw new Meteor.Error('not-autorized');
-        Brooch.insert({
+        Broochs.insert({
             name:nome,
             description:descricao,
         });
