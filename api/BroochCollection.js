@@ -11,6 +11,9 @@ BroochSchema = new SimpleSchema({
     description: {
         type: String,
     },
+    imageName: {
+        type: String,
+    },
     owner:{
         type: String,
         autoValue: function(){
@@ -30,12 +33,13 @@ Broochs.attachSchema(BroochSchema);
 
 Meteor.methods({
 
-    'brooch.insert'(nome,descricao) {
+    'brooch.insert'(nome,descricao,imagemNome) {
         if (! Meteor.userId || !Roles.userIsInRole(Meteor.user(),['teacher'])) 
             throw new Meteor.Error('not-autorized');
         Broochs.insert({
             name:nome,
             description:descricao,
+            imageName: imagemNome,
         });
     },
     'brooch.update'(nome, descricao, imagem, id_brooch) {

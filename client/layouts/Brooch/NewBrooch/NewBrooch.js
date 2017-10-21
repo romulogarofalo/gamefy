@@ -2,6 +2,7 @@ Template.BroochList.onCreated(function () {
     const self = this;
     self.autorun(function () {
         self.subscribe('broochs');
+		self.subscribe('Images');
     });
     this.state = new ReactiveDict();
     const instance = Template.instance();
@@ -43,23 +44,30 @@ Template.NewBrooch.events({
 
         let nome = e.target.name.value;
     	let descricao = e.target.description.value;
+		const nomeArquivo = Math.random().toString(36).substr(2,10)+'.png';
+       // let imagem = e.currentTarget.getElementsByTagName('input')[2].files[0];
 
-       // let imagem = e.currentTarget.getElementsByTagName('input')[2];
-    	Meteor.call('brooch.insert', nome,descricao);
+
+	   const target = e.target;
+	   
+	   console.log(target.image.files[0]);
+
+	   if (target.image.files && target.image.files[0]) {
+			const upload = Images.insert({
+				file:target.image.files[0], 
+				fileName: nomeArquivo,
+		   });
+			upload.on('end', function (error, fileObj){
+				console.log(upload);	
+			
+			
+			});
+	   }
+
+
+    	Meteor.call('brooch.insert', nome,descricao,nomeArquivo);
 		template.find(".new-brooch-form").reset();
 		console.log("foi");
-
-
-        
-
-        // Get value from form element
-        /*
-        const target = event.target;
-        const new_brooch = { name: target.name.value, description: target.description.value, image: target.img.value };
-        Meteor.call('brooch.insert', new_brooch);
-        template.find(".new-brooch-form").reset();
-        $('#new_brooch').modal('close');
-*/
     }
 });
 
