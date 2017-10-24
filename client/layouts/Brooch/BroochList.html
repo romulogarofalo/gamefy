@@ -1,0 +1,28 @@
+<template name="BroochList">
+ {{#if Template.subscriptionsReady}} 
+		{{#if isInRole 'teacher'}}
+			{{> NewBrooch}}
+			{{> EditBrooch}} <!--ainda precisa criar -->
+		{{/if}}
+		<div class="card-panel grey lighten-4">
+			{{#if hasBrooch}} <!--ainda precisa criar -->
+				<div class="row">
+					{{#each brooch}}
+						{{>Brooch}} <!--ainda precisa criar -->
+					{{/each}}
+				</div>
+			{{else}}
+				<h1>Vôce ainda não{{#if isInRole 'teacher'}} criou {{else}} tem {{/if}}
+				nenhum Broche</h1>
+			{{/if}}
+				<div class="row">
+	            {{> PageButtons hasBroochs=hasBroochs previous=prevBroochs next=nextBroochs}}
+	            <div class="{{#if hasBroochs}}col s12 m4 l4{{/if}}">
+	            {{#if isInRole 'teacher'}} 
+	                {{> AddButton add=addBrooch}} <!-- -->
+	            {{/if}}
+	            </div>
+	        </div>
+	    </div>
+{{/if}}
+</template>

@@ -8,6 +8,33 @@ Template.ClassList.onCreated(function () {
     instance.state.set('skip', 0);
 });
 
+Template.ClassList.events({
+    'click .black-text': function (event, instance) {
+        //alert('aqui');
+        var id = this._id;
+        var nome = this.name;
+        var descr = this.description;
+        console.log(id);
+        console.log(nome);
+        console.log(descr);
+        //console.log("aaaa");
+        $('#edit-class').modal('open');
+        document.querySelector('#spanId').textContent = id;
+        document.querySelector('#nomeClasse').value = nome;
+        document.querySelector('#descricaoClasse').value = descr;
+        $('#nomeClasse').focus();
+    },
+
+    'click .red-text': function (event, intance) {
+        var sala = this.name;
+        if(confirm("Deseja mesmo deletar a classe "+ sala)){
+            Meteor.call('classes.delete', this._id);
+            Materialize.toast('Classe Excluida com Sucesso!', 3000);
+        }
+    }
+
+});
+
 
 Template.ClassList.helpers({
 
