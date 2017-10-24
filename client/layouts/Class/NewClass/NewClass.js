@@ -58,8 +58,21 @@ Template.NewClass.events({
 
         // Get value from form element
         const target = event.target;
-        const new_class = { name: target.name.value, description: target.description.value };
-        Meteor.call('classes.insert', new_class);
+        const fileArray = target.image.files
+        const image = target.image.files[0]
+        let new_class = { name: target.name.value, description: target.description.value};
+        Meteor.call('classes.insert', new_class, function(error, result){
+            if(fileArray && image){
+            const upload = Images.insert({
+                file: image,
+                fileName: Math.random().toString(36).substr(2, 10)+'.png' 
+            });
+            upload.on('end', function (error, fileObj) {
+                    Meteor.call('classes.createImages', fileObj.name, result);
+                    
+                });
+            }
+        });
         template.find(".new-class-form").reset();
         $('#new-class').modal('close');
 

@@ -21,6 +21,10 @@ TaskSchema = new SimpleSchema({
         type: String
     },
 
+    grade:{
+        type: Boolean
+    },
+
     createdAt:{
         type: Date,
         autoValue: function(){
@@ -28,6 +32,8 @@ TaskSchema = new SimpleSchema({
         }
     }
 });
+
+Tasks.attachSchema(TaskSchema);
 
  Meteor.methods({ 
     'tasks.insert'(new_task) {

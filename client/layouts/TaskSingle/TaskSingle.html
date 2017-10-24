@@ -7,14 +7,7 @@
                     <h4>{{taskName.name}}</h4>
                 </div>
                 {{#each taskChecklist}}
-               <div class="collection-item">
-                    <span class="title">{{student_name}}</span>
-                    <div class="secondary-content">
-                        <input type="checkbox" id="{{_id}}" checked="{{taskDone _id}}" class="toggle-done" />
-                        <label for="{{_id}}"></label>
-                    </div>
-                    
-               </div>
+                    {{>StudentTask}}
                {{/each}}
             </div>
         </div>

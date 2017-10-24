@@ -30,5 +30,10 @@ Meteor.publish('tasks', function(class_id) {
 });
 
 Meteor.publish('enrollment-task', function(task_id){
-    return Enrollments.find({"tasks.task_id": task_id}, {fields: {student_name: 1, 'tasks.$': 1}});
+    return [Enrollments.find({"tasks.task_id": task_id}, {fields: {student_name: 1, 'tasks.$': 1}}), Tasks.find({_id: task_id}, {fields:{grade: 1}})];
 })  
+
+Meteor.publish('class-image', function(class_id){
+    const current_class = Classes.findOne({_id: class_id}, {fields:{imageName: 1}});
+    return Images.find({name: current_class.imageName}).cursor;
+});
