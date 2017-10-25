@@ -101,7 +101,10 @@ if (Meteor.isServer) {
                 throw new Meteor.Error('not-authorized');
             }
 
-            let enrollment_points = Enrollments.findOne({_id: done_parameters.enrollment_id, 'tasks.task_id': done_parameters.task_id}, {fields: {points: 1, 'tasks.$': 1}});
+            let enrollment_points = Enrollments.findOne({
+                _id: done_parameters.enrollment_id, 'tasks.task_id': done_parameters.task_id}, {fields: {points: 1, 'tasks.$': 1}
+            });
+            console.log(enrollment_points);
             let enrollment_task_updated  = {'tasks.$.done': done_parameters.set_checked};
             let grade_multiplier = 1;
             let current_grade_multiplier = 1;
@@ -109,13 +112,14 @@ if (Meteor.isServer) {
                 if(done_parameters.set_checked){
                     enrollment_task_updated['tasks.$.grade'] = done_parameters.grade;
                     grade_multiplier = 0.2 * done_parameters.grade;
+                    console.log(current_grade_multiplier);
                 }
                 else{
                     current_grade_multiplier = 0.2 * enrollment_points.tasks[0].grade;
                 }
             }
+            enrollment_task_updated.points = Math.round(done_parameters.set_checked ? enrollment_points.points + enrollment_points.tasks[0].max_points * grade_multiplier : enrollment_points.points - enrollment_points.tasks[0].points);
             enrollment_task_updated['tasks.$.points'] = done_parameters.set_checked ? Math.round(enrollment_points.tasks[0].max_points * grade_multiplier) : 0;
-            enrollment_task_updated.points = Math.round(done_parameters.set_checked ? enrollment_points.points + enrollment_points.tasks[0].max_points * grade_multiplier : enrollment_points.points - enrollment_points.tasks[0].max_points * current_grade_multiplier);
             Enrollments.update({_id: done_parameters.enrollment_id, 'tasks.task_id': done_parameters.task_id }, {$set: enrollment_task_updated});    
         } 
     });

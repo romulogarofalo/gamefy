@@ -2,7 +2,7 @@ import { check } from 'meteor/check';
 import SimpleSchema from 'simpl-schema';
 import { FilesCollection } from 'meteor/ostrio:files';
 
-Images = new FilesCollection({
+/*Images = new FilesCollection({
   collectionName: 'Images',
   allowClientCode: false, // Disallow remove files from Client
   onBeforeUpload(file) {
@@ -14,7 +14,7 @@ Images = new FilesCollection({
     }
   }
 });
-
+*/
 Classes = new Mongo.Collection('classes');
 
 ClassSchema = new SimpleSchema({
