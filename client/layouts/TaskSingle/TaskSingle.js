@@ -10,9 +10,7 @@ Template.TaskSingle.helpers({
     taskChecklist(){
         return Enrollments.find({});
     },
-
     taskName(){
-         console.log(Enrollments.findOne({}).tasks);
          return Enrollments.findOne({}).tasks[0];
     }
 });

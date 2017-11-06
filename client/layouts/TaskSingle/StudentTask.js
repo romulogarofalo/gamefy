@@ -1,10 +1,15 @@
 Template.StudentTask.helpers({
     getGrade(){
-        console.log('aaaaaaa')
         const instance = Template.instance();
-        console.log(instance.data.tasks[0].grade)
         return instance.data.tasks[0].grade;
     },
+
+    taskDue(){
+        let date = new Date()
+        date.setHours(0,0,0,0);
+        return Tasks.findOne({}).due < date
+    },
+
 
     taskDone(enrollment_id){
         console.log(Enrollments.findOne({_id: enrollment_id}).tasks[0].done)

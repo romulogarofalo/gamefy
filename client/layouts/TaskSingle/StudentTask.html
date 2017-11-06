@@ -2,10 +2,14 @@
     <div class="collection-item avatar">
         <span class="title">{{student_name}}</span>
             {{#if isTest}}
+                {{#if taskDue}}
+                    {{> starsRating rating=getGrade class="rating" size=25}}
+                {{else}}
                     {{> starsRating rating=getGrade class="rating" mutable=true size=25}}
+                {{/if}}
             {{/if}}
             <div class="secondary-content">
-                <input type="checkbox" id="{{_id}}" checked="{{taskDone _id}}" class="toggle-done" />
+                <input type="checkbox" id="{{_id}}" checked="{{taskDone _id}}" disabled="{{taskDue}}" class="toggle-done" />
                 <label for="{{_id}}"></label>
             </div>
     </div>

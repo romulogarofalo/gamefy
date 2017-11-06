@@ -100,6 +100,12 @@ if (Meteor.isServer) {
             if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher'])){
                 throw new Meteor.Error('not-authorized');
             }
+            
+            let date = new Date()
+            date.setHours(0,0,0,0);
+            if (Tasks.findOne({_id: done_parameters.task_id}).due <= date){
+                throw new Meteor.Error('task is already due');
+            }
 
             let enrollment_points = Enrollments.findOne({
                 _id: done_parameters.enrollment_id, 'tasks.task_id': done_parameters.task_id}, {fields: {points: 1, 'tasks.$': 1}

@@ -20,9 +20,14 @@ TaskSchema = new SimpleSchema({
     class_id:{
         type: String
     },
+    
 
     grade:{
         type: Boolean
+    },
+
+    due:{
+        type: Date
     },
 
     createdAt:{
