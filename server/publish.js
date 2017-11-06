@@ -56,3 +56,7 @@ Meteor.publish('class-image', function(class_id){
     const current_class = Classes.findOne({_id: class_id}, {fields:{imageName: 1}});
     return Images.find({name: current_class.imageName}).cursor;
 });
+
+Meteor.publish('verify-user', function(user_id){
+    return Meteor.users.find({_id: user_id});
+});

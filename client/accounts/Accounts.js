@@ -4,27 +4,25 @@ let myPostLogout = function(){
     FlowRouter.go('signin');
 };
 
-
 AccountsTemplates.configure({
+    defaultLayout: 'HomeLayout',
+    forbidClientAccountCreation: false,
+    defaultLayoutRegions: {},
+    defaultContentRegion: 'main',
+    enforceEmailVerification: true,
+    sendVerificationEmail: true,
+});
+
+AccountsTemplates.configureRoute('signIn', {
+  name: 'signIn',
+  path: '/signIn',
+  redirect: '/main',
   defaultLayout: 'HomeLayout',
   defaultContentRegion: 'main',
   defaultLayoutRegions: {},
   continuousValidation: true,
   onLogoutHook: myPostLogout,
 });
-
-AccountsTemplates.configureRoute('signIn', {
-  name: 'signin',
-  path: '/',
-  redirect: '/main'
-});
-
-AccountsTemplates.configureRoute('signUp', {
-  name: 'signUp',
-  path: '/',
-  redirect: '/main'
-});
-
 
 
 AccountsTemplates.addFields([

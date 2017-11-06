@@ -1,8 +1,17 @@
 FlowRouter.triggers.enter([function(context, redirect){
-    if(!Meteor.userId()){
+    if(!Meteor.userId() && FlowRouter.getRouteName() != 'signIn' && FlowRouter.getRouteName() != 'verify-email'){
+        console.log(FlowRouter.getRouteName())
         FlowRouter.go('/')
     }
 }]);
+
+FlowRouter.route('/', {
+    name:'signupform',
+    action() {
+        BlazeLayout.render('signUp');
+    }
+
+});
 
 FlowRouter.route('/logout',{
     name:'logout',
@@ -15,6 +24,15 @@ FlowRouter.route('/main', {
         BlazeLayout.render('MainLayout', {main: 'ClassList'});
     }
 });
+
+FlowRouter.route('/verify-email/:id', {
+    name:'verify-email',
+    action(){ 
+        BlazeLayout.render('verifyEmail');
+    }
+});
+
+
 
 FlowRouter.route('/class/:id', {
     name:'class',
@@ -34,7 +52,6 @@ FlowRouter.route('/broochs', {
 FlowRouter.route('/task/:task_id', {
     name:'task',
     action(){
-        console.log('oi');
         BlazeLayout.render('MainLayout', {main: 'TaskSingle'});
     }
 });
