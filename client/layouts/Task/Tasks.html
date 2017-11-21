@@ -1,15 +1,44 @@
-<template name="Tasks"> 
-    <div class="collection scrollable">
-        <div class="collection-header">
-             <h4>Tarefas</h4>
+<template name="Tasks">
+    <div class="indigo lighten-1">
+        <div class="collection scrollable">
+            <div class="collection-header">
+                <div class="row">
+                    <div class="col s10">
+                        <h3 class="white-text">Tarefas</h3>
+                    </div>
+                    <div class="col s2">
+                        <i class="large material-icons white-text title-icon">assignment</i>
+                    </div>
+                </div>
+            </div>
+            {{#if isInRole 'teacher'}}
+                {{#each tasksTeacher}}
+                <div class="collection-item avatar">
+                    <a href="/task/{{_id}}">
+                        <span class="title">{{name}}</span>
+                        <p class="task-points indigo-text text-darken-3">{{points}} </p>
+                    </a>
+                    <div>
+                    <a class="secondary-content delete-task"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
+                    </div>
+                </div>
+                {{/each}}
+            {{else}}
+                {{#each tasksStudent}}
+                <div class="collection-item avatar">
+                    <span class="title">{{taskName task_id}}</span>
+                        <p>Valor: {{max_points}} pontos</p>
+                    {{#if taskDone task_id}}
+                         <p>Sua pontuação: {{points}} pontos</p>
+                         <i class="medium material-icons secondary-content">check</i>
+                    {{else}}
+                         <p>Você ainda não fez essa tarefa. Ela deve ser entregue até: {{dateFormat task_id}}</p>
+                         <i class="medium material-icons secondary-content">check_box_outline_blank</i>
+                    {{/if}}
+                </div>
+                {{/each}}
+            {{/if}}
         </div>
-    {{#each tasks}}
-        <a href="/task/{{_id}}" class="collection-item">
-            <span class="title">{{name}}</span>
-            <p>{{points}} </p>
-            
-        </a>
-    {{/each}}
     </div>
     {{#if isInRole 'teacher'}}
         {{> AddButton add=addTask}}

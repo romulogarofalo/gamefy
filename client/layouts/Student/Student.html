@@ -1,8 +1,8 @@
 <template name="Student">
-    <a href="#!" class="collection-item {{#if isCurrentUser student_id}} yellow lighten-4 {{/if}}">
+    <a href="#!" class="collection-item {{#if isCurrentUser student_id}} yellow lighten-5 {{/if}}">
         <span class="title">{{student_name}}</span>
         <span class="badge rank">{{ranking points}} </span>
-        <p>
+        <p class="red-text">
             {{points}}
         </p>
     </a>

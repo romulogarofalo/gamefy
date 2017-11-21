@@ -13,7 +13,9 @@ Template.ClassSingle.onCreated(function() {
 
 Template.ClassSingle.onRendered(function() {
     $('.modal').modal();
-    $('ul.tabs').tabs(); 
+    $('ul.tabs').tabs();
+    $(".tabs>.indicator").css("background-color", 'green');
+
 });
 
 

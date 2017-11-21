@@ -9,11 +9,41 @@ Template.BroochList.onCreated(function () {
     instance.state.set('skip', 0);
 });
 
-Template.BroochList.events({
+Template.Brooch.events({
 
-	//evento de editar
+	'click .edit': function (event, instance) {
+        var nome = this.name;
+        var descr = this.description;
+		var id = this._id;
+        $('#edit-brooch').modal('open');
+        console.log(nome);
+        console.log(descr);
+		//console.log(instance.find('#name'))
+		//instance.find('#name').value = nome;
+		document.querySelector('#spanId').textContent = id;
+        document.querySelector('#nameBrooch').value = nome;
+        document.querySelector('#descriptionBrooch').value = descr;
+        $('#brooch-name').focus();
+    },
 
-	//evento de deletar
+    'click .remove': function (event, intance) {
+        var brooch = this.name;
+        if(confirm("Deseja mesmo deletar o broche "+ brooch)){
+            Meteor.call('brooch.delete', this._id);
+            Materialize.toast('Classe Excluida com Sucesso!', 3000);
+        }
+    },
+    
+     'click .give': function (event, intance) {
+        var brooch_id = this._id;
+        document.querySelector('#broochId').textContent = brooch_id;
+        $('.check-badge').each(function(index){
+                let student_badges = Enrollments.findOne({_id: $(this).attr('id')}).badges;
+                console.log(student_badges.includes(brooch_id));
+                $(this).prop('checked', student_badges.includes(brooch_id));
+        });  
+        $('#give-brooch').modal('open'); 
+    }
 
 });
 
@@ -40,34 +70,31 @@ Template.BroochList.helpers({
 Template.NewBrooch.events({
     'submit .new-brooch': function (e, template) {
 		e.preventDefault();
-    	console.log("form brooch");
 
-        let nome = e.target.name.value;
-    	let descricao = e.target.description.value;
-		const nomeArquivo = Math.random().toString(36).substr(2,10)+'.png';
-       // let imagem = e.currentTarget.getElementsByTagName('input')[2].files[0];
+		const target = e.target;
 
+		let new_brooch = {name: target.name.value, description: target.description.value, points: target.points.value};
+	    const fileArray = target.image.files;
+        const image = target.image.files[0];
+		const nomeArquivo = Math.random().toString(36).substr(2, 10)+'.png'
+	    
 
-	   const target = e.target;
-	   
-	   console.log(target.image.files[0]);
+	   Meteor.call('brooch.insert', new_brooch, function(error, result){
+            if(fileArray && image){
+            const upload = Images.insert({
+                file: image,
+                fileName: nomeArquivo
+            });
+            upload.on('end', function (error, fileObj) {
+                    Meteor.call('brooch.createImages', fileObj.name, result);
+                    
+                });
+            }
+        });
 
-	   if (target.image.files && target.image.files[0]) {
-			const upload = Images.insert({
-				file:target.image.files[0], 
-				fileName: nomeArquivo,
-		   });
-			upload.on('end', function (error, fileObj){
-				console.log(upload);	
-			
-			
-			});
-	   }
-
-
-    	Meteor.call('brooch.insert', nome,descricao,nomeArquivo);
 		template.find(".new-brooch-form").reset();
-		console.log("foi");
+		$('#new-brooch').modal('close');
+		
     }
 });
 

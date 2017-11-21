@@ -4,6 +4,7 @@ Template.Student.helpers({
     },
 
     isCurrentUser: ()=>{
-        return Enrollments.find({student_id: Meteor.userId()});
+        console.log(Enrollments.find({student_id: Meteor.userId()}))
+        return Enrollments.findOne({student_id: Meteor.userId()});
     }
 });

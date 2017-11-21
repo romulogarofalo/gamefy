@@ -1,10 +1,19 @@
 <template name="Students">
+    <div class ="right-align">
     <a class="waves-effect waves-light btn alphabetic {{#if isAlphabetic}}disabled{{/if}}">A-Z</a>
     <a class="waves-effect waves-light btn ranking {{#if isRanking}}disabled{{/if}}">Ranking</a>
-    <div class="collection">
-            <div class="collection-header">
-                <h4>Alunos</h4>
+    </div>
+    <div class="collection cyan darken-3 scrollable">
+        <div class="collection-header">
+            <div class="row">
+                <div class="col s10">
+                    <h3 class="white-text">Alunos</h3>
+                </div>
+                <div class="col s2">
+                    <i class="large material-icons white-text title-icon">people</i>
+                </div>
             </div>
+        </div>
             {{#if isAlphabetic}}
                 {{#each studentsAlphabetic}}
                     {{> Student}}

@@ -13,12 +13,17 @@ BroochSchema = new SimpleSchema({
     },
     imageName: {
         type: String,
+        optional: true
     },
     owner:{
         type: String,
         autoValue: function(){
             return this.userId
         }
+    },
+
+    points: {
+        type: SimpleSchema.Integer,
     },
 
     createdAt:{
@@ -33,16 +38,47 @@ Broochs.attachSchema(BroochSchema);
 
 Meteor.methods({
 
-    'brooch.insert'(nome,descricao,imagemNome) {
+    'brooch.insert'(new_brooch) {
         if (! Meteor.userId || !Roles.userIsInRole(Meteor.user(),['teacher'])) 
             throw new Meteor.Error('not-autorized');
-        Broochs.insert({
-            name:nome,
-            description:descricao,
-            imageName: imagemNome,
+        let brooch_id = Broochs.insert({
+            name:new_brooch.name,
+            description:new_brooch.description,
+            points: new_brooch.points
         });
+        return brooch_id;
     },
-    'brooch.update'(nome, descricao, imagem, id_brooch) {
+
+    'brooch.createImages' (filename, brooch_id){
+        console.log(filename);
+        console.log(brooch_id);
+        Broochs.update({_id: brooch_id}, {$set: {imageName: filename}});
+    },
+
+    'brooch.give' (selected, brooch_id){
+        for (s in selected){
+            if(selected[s].checked) {
+                if(!Enrollments.findOne({_id: selected[s].id}).badges.includes(brooch_id))
+                {
+                    const updated_points = Broochs.findOne({_id: brooch_id}).points + Enrollments.findOne({_id: selected[s].id}).points;
+                    Enrollments.update({_id: selected[s].id}, {$set: {points: updated_points}});
+                    Enrollments.update({_id: selected[s].id}, {$push: {badges: brooch_id}});
+                }
+                else{
+                    console.log('o aluno ja tem esse broche');
+                }
+            }
+            else{
+                if(Enrollments.findOne({_id: selected[s].id}).badges.includes(brooch_id)){
+                    const updated_points = Enrollments.findOne({_id: selected[s].id}).points - Broochs.findOne({_id: brooch_id}).points;
+                    Enrollments.update({_id: selected[s].id}, {$set: {points: updated_points}});
+                    Enrollments.update({_id: selected[s].id}, {$pull: {badges: brooch_id}});
+                }
+            }
+        }
+    },
+
+    'brooch.update'( id_brooch, nome, descricao) {
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
 
@@ -50,7 +86,6 @@ Meteor.methods({
             $set: {
                 name: nome,
                 description: descricao,
-                image: imagem
             }
         });
     },

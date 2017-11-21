@@ -1,16 +1,34 @@
 <template name="TaskSingle">
     {{#if Template.subscriptionsReady}}
-    <div class="card-panel grey lighten-4">
-        <div class="row"> 
-            <div class="collection scrollable">
+    <div class="section">
+        <div class="row">
+          <div class="col s4">  
+                <a href="/class/{{taskClass}}" class="waves-effect waves-light btn-large"><i class="material-icons left white-text">arrow_back</i>Voltar</a>
+          </div>
+          <div class="col s8"> 
+            <h3>Tarefa: {{taskName}}</h3>
+          </div>
+        </div>
+    </div>
+    <div class="section">
+    <div class="divider"></div>
+    <div class="indigo lighten-1">
+        <div class="collection scrollable">
                 <div class="collection-header">
-                    <h4>{{taskName.name}}</h4>
+                    <div class="row">
+                        <div class="col s10">
+                            <h3 class="white-text">Checklist</h3>
+                        </div>
+                        <div class="col s2">
+                            <i class="large material-icons white-text title-icon">checklist</i>
+                        </div>
+                    </div>
                 </div>
                 {{#each taskChecklist}}
                     {{>StudentTask}}
                {{/each}}
-            </div>
         </div>
+    </div>
     </div>
     {{else}}
         <span>Carregando</span>

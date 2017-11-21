@@ -59,11 +59,10 @@ Meteor.methods({
         return created_class_id;
     },
 
-    'classes.createImages' (filename, class_id){
-        Classes.update({_id: class_id}, {$set: {imageName: filename}});
-    }
+    'classes.createImages' (filename, brooch_id){
+        Classes.update({_id: brooch_id}, {$set: {imageName: filename}});
+    },
 
-    /*
     'classes.update'(nome, descricao, id_class) {
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
@@ -81,5 +80,5 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         Classes.remove(id_class);
     }
-*/
+
 });

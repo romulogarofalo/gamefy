@@ -9,16 +9,16 @@ StudentTaskSchema = new SimpleSchema({
         type: String,
     },
 
-    name:{
-        type: String,
-    },
-
     done:{
         type: Boolean,
     },
 
     max_points:{
         type: SimpleSchema.Integer,
+    },
+
+    due:{
+        type: Date,
     },
 
     points:{
@@ -59,6 +59,16 @@ EnrollmentSchema = new SimpleSchema({
     "tasks.$":{
         type: StudentTaskSchema,
     },
+
+    badges:{ 
+        type: Array,
+        optional: true
+    },
+
+    "badges.$":{
+        type: String,
+    },
+
     createdAt:{
         type: Date,
         autoValue: function(){
@@ -82,14 +92,14 @@ if (Meteor.isServer) {
                 throw new Meteor.Error(404, 'not found');
             }
         
-        let new_enrollment = {student_id: student._id, student_name: student.profile.name, class_id: enrollment_attempt.class_id, points: 0};
+        let new_enrollment = {student_id: student._id, student_name: student.profile.name, class_id: enrollment_attempt.class_id, points: 0, badges: []};
 
         Enrollments.insert(new_enrollment, function(err, enrollment_id){ 
                 let inserted_enrollment = Enrollments.findOne({_id: enrollment_id});;
                 if(Tasks.find({class_id: inserted_enrollment.class_id})){
                     Tasks.find({class_id: inserted_enrollment.class_id}).forEach(function(task){
                         Enrollments.update({_id: enrollment_id}, { $push: 
-                            {tasks: { task_id: task._id , name: task.name, done: false, max_points: task.points}}
+                            {tasks: { task_id: task._id, due: task.due, done: false, max_points: task.points}}
                         });
                     });
                 }         
@@ -110,10 +120,11 @@ if (Meteor.isServer) {
             let enrollment_points = Enrollments.findOne({
                 _id: done_parameters.enrollment_id, 'tasks.task_id': done_parameters.task_id}, {fields: {points: 1, 'tasks.$': 1}
             });
-            console.log(enrollment_points);
+
             let enrollment_task_updated  = {'tasks.$.done': done_parameters.set_checked};
             let grade_multiplier = 1;
             let current_grade_multiplier = 1;
+
             if(Tasks.findOne({_id: done_parameters.task_id}, {fields: {grade: 1}}).grade){
                 if(done_parameters.set_checked){
                     enrollment_task_updated['tasks.$.grade'] = done_parameters.grade;
@@ -124,8 +135,17 @@ if (Meteor.isServer) {
                     current_grade_multiplier = 0.2 * enrollment_points.tasks[0].grade;
                 }
             }
+
             enrollment_task_updated.points = Math.round(done_parameters.set_checked ? enrollment_points.points + enrollment_points.tasks[0].max_points * grade_multiplier : enrollment_points.points - enrollment_points.tasks[0].points);
             enrollment_task_updated['tasks.$.points'] = done_parameters.set_checked ? Math.round(enrollment_points.tasks[0].max_points * grade_multiplier) : 0;
+            if(done_parameters.set_checked){
+                console.log('oi');
+                Tasks.update({_id: done_parameters.task_id}, {$push: {students: done_parameters.enrollment_id}})
+            }
+            else
+            {
+               Tasks.update({_id: done_parameters.task_id}, {$pull: {students: done_parameters.enrollment_id}}) 
+            }
             Enrollments.update({_id: done_parameters.enrollment_id, 'tasks.task_id': done_parameters.task_id }, {$set: enrollment_task_updated});    
         } 
     });

@@ -10,7 +10,12 @@ Template.TaskSingle.helpers({
     taskChecklist(){
         return Enrollments.find({});
     },
+
     taskName(){
-         return Enrollments.findOne({}).tasks[0];
+         return Tasks.findOne({}).name;
+    },
+    
+    taskClass(){
+        return Tasks.findOne({}).class_id;
     }
 });

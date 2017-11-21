@@ -2,3 +2,13 @@
     overflow-y: auto;
     max-height: 400px;
 }
+
+.title-icon{
+    margin-top: 10px;
+}
+
+.task-points{
+    line-height: 300%;
+    font-size: 16px
+
+}

@@ -9,7 +9,7 @@ Template.ClassList.onCreated(function () {
 });
 
 Template.ClassList.events({
-    'click .black-text': function (event, instance) {
+    'click .edit': function (event, instance) {
         //alert('aqui');
         var id = this._id;
         var nome = this.name;
@@ -17,7 +17,6 @@ Template.ClassList.events({
         console.log(id);
         console.log(nome);
         console.log(descr);
-        //console.log("aaaa");
         $('#edit-class').modal('open');
         document.querySelector('#spanId').textContent = id;
         document.querySelector('#nomeClasse').value = nome;
@@ -25,7 +24,7 @@ Template.ClassList.events({
         $('#nomeClasse').focus();
     },
 
-    'click .red-text': function (event, intance) {
+    'click .remove': function (event, intance) {
         var sala = this.name;
         if(confirm("Deseja mesmo deletar a classe "+ sala)){
             Meteor.call('classes.delete', this._id);
@@ -41,6 +40,10 @@ Template.ClassList.helpers({
     classes: () => {
         const instance = Template.instance();
         return Classes.find({}, { limit: 3, skip: instance.state.get('skip') });
+    },
+
+    username: () => {
+        return Meteor.user().profile.name; 
     },
 
     hasClasses: () => {
@@ -85,8 +88,8 @@ Template.NewClass.events({
 
         // Get value from form element
         const target = event.target;
-        const fileArray = target.image.files
-        const image = target.image.files[0]
+        const fileArray = target.image.files;
+        const image = target.image.files[0];
         let new_class = { name: target.name.value, description: target.description.value};
         Meteor.call('classes.insert', new_class, function(error, result){
             if(fileArray && image){
@@ -106,7 +109,7 @@ Template.NewClass.events({
     }
 });
 
-Template.ClassList.events({
+/*Template.ClassList.events({
     'click .black-text': function (event, instance) {
         //alert('aqui');
         var id = this._id;
@@ -138,4 +141,4 @@ Template.ClassList.events({
         }
     }
 
-});
+});*/

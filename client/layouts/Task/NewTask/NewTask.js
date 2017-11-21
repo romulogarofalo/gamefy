@@ -25,7 +25,7 @@ Template.NewTask.events({
     const target = event.target;
     const id = FlowRouter.getParam('id');
     const current_class = Classes.findOne({_id: id});
-    const new_enrollment = {name: target.name.value, description: target.description.value, points: target.points.value, grade: target.grade.checked, class_id: current_class._id, due: target.due.value};
+    const new_enrollment = {name: target.name.value, description: target.description.value, points: target.points.value, grade: target.grade.checked, class_id: current_class._id, due: target.due.value, students: []};
     console.log(new_enrollment);
     Meteor.call('tasks.insert', new_enrollment, (error, result) => {
             if(!error){

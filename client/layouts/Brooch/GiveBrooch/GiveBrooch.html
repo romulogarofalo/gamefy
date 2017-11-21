@@ -1,0 +1,21 @@
+<template name="GiveBrooch">
+	<div id="give-brooch" class="modal give-brooch">
+        <div class="modal-content">
+        <form class="give-brooch-form">
+
+            {{#each students}}
+                <p>
+                    <input type="checkbox" class="check-badge" id="{{_id}}" name="{{_id}}" checked=""/>
+                    <label for="{{_id}}">{{student_name}}</label>
+                </p>
+            {{/each}}
+
+            <span style="display:none" id="broochId"></span>
+       
+            <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+        </div>
+    </div>
+</template>

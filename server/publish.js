@@ -1,9 +1,5 @@
 Meteor.publish('classes', function() {
 
-    return Classes.find({
-        owner: this.userId
-    });
-
     if (Roles.userIsInRole(this.userId, ['teacher'])) {
         return Classes.find({
             owner: this.userId
@@ -30,16 +26,34 @@ Meteor.publish('students', function(class_id) {
 });
 
 Meteor.publish('tasks', function(class_id) {
-    return Tasks.find({
-        class_id: class_id
-
-    });    
+    if (Roles.userIsInRole(this.userId, ['teacher'])){
+        return Tasks.find({
+            class_id: class_id
+        });    
+    }
+    else{
+        return [Enrollments.find({
+            student_id: Meteor.userId(), class_id: class_id}, {fields: {student_name: 1, tasks: 1}
+        }),
+        Tasks.find({
+            class_id: class_id}, {fields:{name: 1, due: 1}
+        })];  
+    }
 });
 
 Meteor.publish('broochs', function() {
-    return Broochs.find({
-        owner: this.userId
-    });    
+    if (Roles.userIsInRole(this.userId, ['teacher'])){
+        return Broochs.find({
+            owner: this.userId
+        }); 
+    } 
+    else{
+         console.log(Enrollments.findOne({student_id: Meteor.userId()}))
+         let badges = Enrollments.findOne({student_id: Meteor.userId()}).badges;
+         console.log(badges);
+         //console.log(Enrollments.findOne({student_id: Meteor.userId()}))
+         return Broochs.find({_id: {$in: badges}});
+    }  
 });
 
 
@@ -48,7 +62,7 @@ Meteor.publish('enrollment-task', function(task_id){
         "tasks.task_id": task_id}, {fields: {student_name: 1, 'tasks.$': 1}
         }), 
         Tasks.find({
-            _id: task_id}, {fields:{grade: 1, due: 1}
+            _id: task_id}, {fields:{name: 1, grade: 1, due: 1, class_id: 1}
         })];
 })  
 

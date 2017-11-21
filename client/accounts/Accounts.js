@@ -9,6 +9,7 @@ AccountsTemplates.configure({
   defaultLayout: 'HomeLayout',
   defaultContentRegion: 'main',
   defaultLayoutRegions: {},
+  defaultTemplate: 'AccountLayout',
   continuousValidation: true,
   onLogoutHook: myPostLogout,
 });
