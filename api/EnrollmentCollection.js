@@ -113,7 +113,7 @@ if (Meteor.isServer) {
             
             let date = new Date()
             date.setHours(0,0,0,0);
-            if (Tasks.findOne({_id: done_parameters.task_id}).due <= date){
+            if (Tasks.findOne({_id: done_parameters.task_id}).due < date){
                 throw new Meteor.Error('task is already due');
             }
 
