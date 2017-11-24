@@ -60,3 +60,8 @@ Meteor.publish('class-image', function(class_id){
 Meteor.publish('verify-user', function(user_id){
     return Meteor.users.find({_id: user_id});
 });
+
+Meteor.publish('resetPassword', function(user_id){
+    return [Dates.find({}), Meteor.users.find({_id: user_id})];
+});
+

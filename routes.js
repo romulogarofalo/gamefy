@@ -1,5 +1,5 @@
 FlowRouter.triggers.enter([function(context, redirect){
-    if(!Meteor.userId() && FlowRouter.getRouteName() != 'signIn' && FlowRouter.getRouteName() != 'verify-email'){
+    if(!Meteor.userId() && FlowRouter.getRouteName() != 'signIn' && FlowRouter.getRouteName() != 'verify-email' && FlowRouter.getRouteName() != 'startReset' && FlowRouter.getRouteName() != 'resetPassword'){
         console.log(FlowRouter.getRouteName())
         FlowRouter.go('/')
     }
@@ -24,6 +24,21 @@ FlowRouter.route('/main', {
         BlazeLayout.render('MainLayout', {main: 'ClassList'});
     }
 });
+
+FlowRouter.route('/reset-password/:id', {
+    name:'resetPassword',
+    action(){ 
+        BlazeLayout.render('resetPassword');
+    }
+});
+
+FlowRouter.route('/startReset', {
+    name:'startReset',
+    action(){ 
+        BlazeLayout.render('startReset');
+    }
+});
+
 
 FlowRouter.route('/verify-email/:id', {
     name:'verify-email',

@@ -11,6 +11,7 @@ AccountsTemplates.configure({
     defaultContentRegion: 'main',
     enforceEmailVerification: true,
     sendVerificationEmail: true,
+    hideSignUpLink: true,
 });
 
 AccountsTemplates.configureRoute('signIn', {

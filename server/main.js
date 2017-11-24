@@ -5,13 +5,15 @@ Meteor.startup(() => {
 });
 
 Accounts.validateLoginAttempt(function(user){
-    const id = user.user._id;
-    const verified = Meteor.users.findOne({_id: id}).emails[0].verified;
-    if(!verified){
-        return false;
+    console.log(user);
+    console.log(user.user._id);
+    let id = user.user._id;
+    let verified = Meteor.users.findOne({_id: id}).emails[0].verified;
+    if(verified){
+        return true;
     }
     else{
-      return true;
+      return false;
     }
 });
 

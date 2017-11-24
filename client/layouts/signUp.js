@@ -7,6 +7,13 @@ Template.signUp.events({
         event.preventDefault();
         const target = event.target;
         const new_user = {email: target.email.value, name: target.name.value, role: target.role.value};
-        Meteor.call('user.create', new_user);
+        Meteor.call('user.create', new_user, function(error){
+            if(error){
+            alert("esse e-mail já esta cadastrado")
+            }
+            else{
+            alert("Um email de confirmação foi enviado. Verifique sua caixa de entrada");
+            }
+        });
     }
 });
