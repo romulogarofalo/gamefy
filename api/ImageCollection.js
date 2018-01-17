@@ -1,5 +1,6 @@
 import { FilesCollection } from 'meteor/ostrio:files';
 
+//crio a Collection de imagens e configuro
 Images = new FilesCollection({
     collectionName: 'Images',
     allowClientCode: false,

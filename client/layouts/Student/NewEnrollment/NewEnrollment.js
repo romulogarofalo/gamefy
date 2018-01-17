@@ -3,7 +3,6 @@ Template.NewEnrollment.events({
     
     event.preventDefault();
  
-    // Get value from form element
     const target = event.target;
     const id = FlowRouter.getParam('id');
     const current_class = Classes.findOne({_id: id});

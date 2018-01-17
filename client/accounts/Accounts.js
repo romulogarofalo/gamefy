@@ -1,5 +1,6 @@
 T9n.setLanguage("pt");
 
+//configuro a rota padrão após o logout
 let myPostLogout = function(){
     FlowRouter.go('signin');
 };
@@ -14,12 +15,15 @@ AccountsTemplates.configure({
   onLogoutHook: myPostLogout,
 });
 
+//configuro a rota padrão ao logar
 AccountsTemplates.configureRoute('signIn', {
   name: 'signin',
   path: '/',
   redirect: '/main'
 });
 
+
+//configuro a rota padrão ao se cadastrar
 AccountsTemplates.configureRoute('signUp', {
   name: 'signUp',
   path: '/',
@@ -27,7 +31,7 @@ AccountsTemplates.configureRoute('signUp', {
 });
 
 
-
+//crio os campos personalizados para o cadastro de usuários
 AccountsTemplates.addFields([
      {
         _id: 'role',

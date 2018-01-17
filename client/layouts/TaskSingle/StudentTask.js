@@ -1,9 +1,12 @@
 Template.StudentTask.helpers({
+
+    //retorno a nota do estudante ao qual aquele elemento se refere
     getGrade(){
         const instance = Template.instance();
         return instance.data.tasks[0].grade;
     },
 
+    //retorno se a tarefa já passou do prazo ou não
     taskDue(){
         let date = new Date()
         date.setHours(0,0,0,0);
@@ -12,10 +15,10 @@ Template.StudentTask.helpers({
 
 
     taskDone(enrollment_id){
-        console.log(Enrollments.findOne({_id: enrollment_id}).tasks[0].done)
         return Enrollments.findOne({_id: enrollment_id}).tasks[0].done;
     },
 
+    //verifico se a tarefa possui nota ou não
      isTest(){
         return Tasks.findOne({}).grade;
     },

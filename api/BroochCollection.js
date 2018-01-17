@@ -3,6 +3,7 @@ import SimpleSchema from 'simpl-schema';
 
 Broochs = new Mongo.Collection('broochs');
 
+//crio o schema para a collection dos broches
 BroochSchema = new SimpleSchema({
     name: {
         type: String,
@@ -38,6 +39,7 @@ Broochs.attachSchema(BroochSchema);
 
 Meteor.methods({
 
+    //insiro o broche na collection
     'brooch.insert'(new_brooch) {
         if (! Meteor.userId || !Roles.userIsInRole(Meteor.user(),['teacher'])) 
             throw new Meteor.Error('not-autorized');
@@ -49,26 +51,28 @@ Meteor.methods({
         return brooch_id;
     },
 
+    //atualizo o broche com a sua imagem
     'brooch.createImages' (filename, brooch_id){
         console.log(filename);
         console.log(brooch_id);
         Broochs.update({_id: brooch_id}, {$set: {imageName: filename}});
     },
 
+    //atualizo a lista de broches dos alunos de uma classe
     'brooch.give' (selected, brooch_id){
         for (s in selected){
+            //verifica se aquele aluno do array passado está com 'checked'
             if(selected[s].checked) {
+                //verifico se o aluno já não possui aquele broche, se não possuir, adiciono e somo a pontuação do broche aos pontos dele
                 if(!Enrollments.findOne({_id: selected[s].id}).badges.includes(brooch_id))
                 {
                     const updated_points = Broochs.findOne({_id: brooch_id}).points + Enrollments.findOne({_id: selected[s].id}).points;
                     Enrollments.update({_id: selected[s].id}, {$set: {points: updated_points}});
                     Enrollments.update({_id: selected[s].id}, {$push: {badges: brooch_id}});
                 }
-                else{
-                    console.log('o aluno ja tem esse broche');
-                }
             }
             else{
+                //verifico se o aluno possui aquele broche, se possuir, removo e subtraio a pontuação do broche aos pontos dele
                 if(Enrollments.findOne({_id: selected[s].id}).badges.includes(brooch_id)){
                     const updated_points = Enrollments.findOne({_id: selected[s].id}).points - Broochs.findOne({_id: brooch_id}).points;
                     Enrollments.update({_id: selected[s].id}, {$set: {points: updated_points}});
@@ -78,7 +82,10 @@ Meteor.methods({
         }
     },
 
+    //atualizo nome e descrição do broche na collection
     'brooch.update'( id_brooch, nome, descricao) {
+
+        //verifico se está logado e a autorização
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
 
@@ -90,6 +97,8 @@ Meteor.methods({
         });
     },
 
+    //removo o broche da collection
+    //TO DO: impedir que ele seja removido caso algum aluno possua-o ou removê-lo automaticamente de todos os alunos
     'brooch.delete'(id_brooch) {
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');

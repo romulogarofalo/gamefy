@@ -2,21 +2,9 @@ import { check } from 'meteor/check';
 import SimpleSchema from 'simpl-schema';
 import { FilesCollection } from 'meteor/ostrio:files';
 
-/*Images = new FilesCollection({
-  collectionName: 'Images',
-  allowClientCode: false, // Disallow remove files from Client
-  onBeforeUpload(file) {
-    // Allow upload files under 10MB, and only in png/jpg/jpeg formats
-    if (file.size <= 10485760 && /png|jpg|jpeg/i.test(file.extension)) {
-      return true;
-    } else {
-      return 'Please upload image, with size equal or less than 10MB';
-    }
-  }
-});
-*/
 Classes = new Mongo.Collection('classes');
 
+//crio o schema para a collection das classes
 ClassSchema = new SimpleSchema({
     name: {
         type: String,
@@ -51,19 +39,26 @@ Classes.attachSchema(ClassSchema);
 
 Meteor.methods({ 
     'classes.insert'(new_class) {
+
+        //verifico se está  logado e se é professor
         if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher']))
             throw new Meteor.Error('not-authorized');
-        console.log(new_class);
         created_class_id = Classes.insert(new_class);
-        console.log(created_class_id);
+
+        //retorno o id da classe para utilizá-lo no upload da imagem
         return created_class_id;
     },
 
+    //atualizo a classe com a imagem dela
     'classes.createImages' (filename, brooch_id){
         Classes.update({_id: brooch_id}, {$set: {imageName: filename}});
     },
 
+    //atualizo a classe com as novas informações de nome e descrição
+    //TO DO: permitir a atualização da imagem
     'classes.update'(nome, descricao, id_class) {
+
+        //verifico se está logado e autorização
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
 
@@ -75,7 +70,11 @@ Meteor.methods({
         });
     },
 
+    //deleto a classe passada da Collection
+    //TO DO: deletar os dados referentes a essa classe das outras collections (matriculas, tarefas e broches)
     'classes.delete'(id_class) {
+
+        //verifico se está logado e autorização
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
         Classes.remove(id_class);

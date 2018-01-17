@@ -1,0 +1,20 @@
+<template name="EditTask">
+    <div id="edit-task" class="modal">
+        <div class="modal-content">
+            <h3>Editar Tarefa</h3>
+            <form class="edit-task-form">
+                <input type="text" name="name" placeholder="Nome" id="name-task" />
+                <input type="text" name="description" placeholder="Descrição" id="description-task" />
+                <input type="hidden" id="task-id" value=""/>
+
+                <button class="btn waves-effect waves-light" name="action" id="cancel">Cancelar
+                    <i class="material-icons right">cancel</i>
+                </button>
+                <button class="btn waves-effect waves-light right" type="submit" name="action" id="update">Atualizar
+                    <i class="material-icons right">autorenew</i>
+                </button>
+
+            </form>
+        </div>
+    </div>
+</template>

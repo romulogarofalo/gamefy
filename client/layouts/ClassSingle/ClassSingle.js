@@ -2,15 +2,18 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 
 Template.ClassSingle.onCreated(function() {
+    //me inscrevo nas publishs necessarias
     const self = this;
     self.autorun(function() { 
         self.subscribe('classes');
     }); 
+
+    //crio um dicionário reativo para lidar com as tabs e configuro a tab inicial
     this.state = new ReactiveDict();
     this.state.set('currentTab', 'Students');
 });
 
-
+//inicializo e configuro os elementos de UI do Materialize
 Template.ClassSingle.onRendered(function() {
     $('.modal').modal();
     $('ul.tabs').tabs();
@@ -21,6 +24,7 @@ Template.ClassSingle.onRendered(function() {
 
 Template.ClassSingle.helpers({ 
 
+    //retorno a tab atual
     tab: ()=> {
         const instance = Template.instance();
         var tab = instance.state.get('currentTab');

@@ -10,5 +10,8 @@
 .task-points{
     line-height: 300%;
     font-size: 16px
+}
 
+.edit-task{
+    margin-right: 70px
 }

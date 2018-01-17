@@ -1,3 +1,4 @@
+//pego os parametros da url e me inscrevo nas publishs necessárias
 Template.TaskSingle.onCreated(function() {
     const self = this;
     const task_id = FlowRouter.getParam('task_id');

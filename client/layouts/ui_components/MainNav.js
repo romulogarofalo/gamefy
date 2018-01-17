@@ -1,7 +1,8 @@
 Template.MainNav.onRendered(function () {
+    //crio e configuro o dropdown no perfil do usuario
      $('.dropdown-button').dropdown({
          belowOrigin: true,
-        hover: true
+         hover: true
      })
 });
 

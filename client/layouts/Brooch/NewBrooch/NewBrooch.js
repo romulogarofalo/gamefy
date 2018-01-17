@@ -1,9 +1,12 @@
 Template.BroochList.onCreated(function () {
+    //pego os parametros da url e me inscrevo nas publishs necessárias
     const self = this;
     self.autorun(function () {
         self.subscribe('broochs');
 		self.subscribe('Images');
     });
+
+    //crio um dicionario reativo para lidar com as páginas e configuro o valor inicial
     this.state = new ReactiveDict();
     const instance = Template.instance();
     instance.state.set('skip', 0);
@@ -18,8 +21,6 @@ Template.Brooch.events({
         $('#edit-brooch').modal('open');
         console.log(nome);
         console.log(descr);
-		//console.log(instance.find('#name'))
-		//instance.find('#name').value = nome;
 		document.querySelector('#spanId').textContent = id;
         document.querySelector('#nameBrooch').value = nome;
         document.querySelector('#descriptionBrooch').value = descr;
@@ -35,11 +36,20 @@ Template.Brooch.events({
     },
     
      'click .give': function (event, intance) {
+        
+        //pego o id do broche ao qual aquele elemento se refere
         var brooch_id = this._id;
+
+        //TO DO: mudar pra input type=hidden
         document.querySelector('#broochId').textContent = brooch_id;
+
+        //populo a modal de premiar/retirar broches com os alunos daquela sala
         $('.check-badge').each(function(index){
                 let student_badges = Enrollments.findOne({_id: $(this).attr('id')}).badges;
-                console.log(student_badges.includes(brooch_id));
+                /*
+                    pego o array de broches do aluno e verifico se ele possui o broche com o id pego anteriormente 
+                    para setar o atributo checked
+                */
                 $(this).prop('checked', student_badges.includes(brooch_id));
         });  
         $('#give-brooch').modal('open'); 
@@ -73,18 +83,23 @@ Template.NewBrooch.events({
 
 		const target = e.target;
 
+        //crio um objeto com os valores inseridos pelo usuario sem a imagem
 		let new_brooch = {name: target.name.value, description: target.description.value, points: target.points.value};
+
+        //pego a imagem
 	    const fileArray = target.image.files;
         const image = target.image.files[0];
 		const nomeArquivo = Math.random().toString(36).substr(2, 10)+'.png'
 	    
 
 	   Meteor.call('brooch.insert', new_brooch, function(error, result){
+           //caso a inserção seja um sucesso inicio o upload da imagem
             if(fileArray && image){
             const upload = Images.insert({
                 file: image,
                 fileName: nomeArquivo
             });
+            //ao fim do upload, chamo o metodo createImages no servidor para salvar o nome da imagem na classe
             upload.on('end', function (error, fileObj) {
                     Meteor.call('brooch.createImages', fileObj.name, result);
                     
