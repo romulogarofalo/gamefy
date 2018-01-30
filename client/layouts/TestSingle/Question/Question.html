@@ -1,0 +1,27 @@
+<template name="Question">
+<div class="divider"></div>
+    <div class="section">
+      <div class="row">
+        <div class="col s5">
+          <div class="question-image">
+          <img class="responsive-img" src="{{imageFile imageName}}">
+          </div>
+        </div>
+        <div class="col s6">
+          <span class="black-text">
+            {{statement}} 
+          </span>
+          {{#each questionAnswers answers}}
+            <p>
+              <input name="saved-question" type="radio" id="{{answer_name}}" />
+              <label for="{{answer_name}}">{{answer_text}}</label>
+            </p>
+          {{/each}}
+          </div>
+         <div class="col s1">
+               <a class="delete-question"><i class="medium red-text material-icons">delete</i></a>
+               <a class="edit-question"><i class="medium black-text material-icons">edit</i></a>
+         </div>  
+      </div>
+    </div>
+</template>

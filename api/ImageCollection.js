@@ -3,6 +3,7 @@ import { FilesCollection } from 'meteor/ostrio:files';
 //crio a Collection de imagens e configuro
 Images = new FilesCollection({
     collectionName: 'Images',
+    storagePath: '/data',
     allowClientCode: false,
     onBeforeUpload(file) {
         if (file.size <= 10485760 && /png|jpg|jpeg/i.test(file.extension)) {

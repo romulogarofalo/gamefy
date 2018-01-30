@@ -1,5 +1,5 @@
 Template.Tasks.onCreated(function() {
-    //pego os parametros da url e me inscrevo nas publishs necessarias
+    //me inscrevo nas publishs necessarias
     const self = this;
     const class_id = FlowRouter.getParam('id');
     self.autorun(function() { 

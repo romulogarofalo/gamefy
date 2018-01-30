@@ -34,8 +34,14 @@ FlowRouter.route('/broochs', {
 FlowRouter.route('/task/:task_id', {
     name:'task',
     action(){
-        console.log('oi');
         BlazeLayout.render('MainLayout', {main: 'TaskSingle'});
+    }
+});
+
+FlowRouter.route('/test/:test_id', {
+    name:'test',
+    action(){
+        BlazeLayout.render('MainLayout', {main: 'TestSingle'});
     }
 });
 

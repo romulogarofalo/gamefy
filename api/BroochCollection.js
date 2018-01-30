@@ -53,8 +53,6 @@ Meteor.methods({
 
     //atualizo o broche com a sua imagem
     'brooch.createImages' (filename, brooch_id){
-        console.log(filename);
-        console.log(brooch_id);
         Broochs.update({_id: brooch_id}, {$set: {imageName: filename}});
     },
 

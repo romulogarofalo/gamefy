@@ -1,0 +1,32 @@
+<template name="EditQuestion">
+    <div id="edit-question" class="modal">
+        <div class="modal-content">
+            <h4>Questão</h4>
+            <form class="edit-question-form">
+                <div class="input-field">
+                    <textarea id="statement" name="statement" class="materialize-textarea"></textarea>
+                    <label for="statement">Enunciado</label>
+                </div>
+                <div class="row">
+                    <div class="col s9">
+                        <div class="input-field">
+                             <input type="text" id="new-answer" name="new-answer"/>
+                             <label for="name">Resposta</label>
+                        </div>
+                    </div>
+                    <div class="col s3">
+                        <div class="input-field">
+                            <a class="waves-effect waves-teal btn-flat" id="add-answer">Adicionar</a>
+                        </div>
+                    </div>
+                </div>
+                {{#each answerList}}
+                    {{> SingleAnswer}}
+                {{/each}}
+                <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+        </div>
+    </div>
+</template>

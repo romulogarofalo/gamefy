@@ -41,6 +41,22 @@ Meteor.publish('tasks', function(class_id) {
     }
 });
 
+Meteor.publish('tests', function(class_id) {
+    if (Roles.userIsInRole(this.userId, ['teacher'])){
+        return Tests.find({
+            class_id: class_id
+        });    
+    }
+});
+
+Meteor.publish('test-single', function(test_id) {
+    if (Roles.userIsInRole(this.userId, ['teacher'])){
+        return Tests.find({
+            _id: test_id
+        }, {fields: {name: 1, questions: 1}});    
+    }
+});
+
 Meteor.publish('broochs', function() {
     if (Roles.userIsInRole(this.userId, ['teacher'])){
         return Broochs.find({
@@ -48,10 +64,7 @@ Meteor.publish('broochs', function() {
         }); 
     } 
     else{
-         console.log(Enrollments.findOne({student_id: Meteor.userId()}))
          let badges = Enrollments.findOne({student_id: Meteor.userId()}).badges;
-         console.log(badges);
-         //console.log(Enrollments.findOne({student_id: Meteor.userId()}))
          return Broochs.find({_id: {$in: badges}});
     }  
 });

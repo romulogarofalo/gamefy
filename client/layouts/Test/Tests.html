@@ -1,0 +1,34 @@
+<template name="Tests">
+    <div class="indigo lighten-1">
+        <div class="collection scrollable">
+            <div class="collection-header">
+                <div class="row">
+                    <div class="col s10">
+                        <h3 class="white-text">Questionários</h3>
+                    </div>
+                    <div class="col s2">
+                        <i class="large material-icons white-text title-icon">check</i>
+                    </div>
+                </div>
+            </div>
+            {{#if isInRole 'teacher'}}
+                {{#each testsTeacher}}
+                <div class="collection-item avatar">
+                    <a href="/test/{{_id}}">
+                        <span class="title">{{name}}</span>
+                        <p class="task-points indigo-text text-darken-3">{{points}} </p>
+                        <p>{{#if status}} Questionario publicado{{else}}Questionário não publicado{{/if}}</p>
+                    </a>
+                    <div>
+                    <a class="secondary-content delete-task"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
+                    <a class="secondary-content edit-task"><i class="medium black-text material-icons" id="{{_id}}">edit</i></a>
+                    </div>
+                </div>
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+    {{#if isInRole 'teacher'}}
+        {{> AddButton add=addTest}}
+    {{/if}}
+</template>
