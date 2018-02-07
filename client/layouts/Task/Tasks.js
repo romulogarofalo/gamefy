@@ -62,7 +62,7 @@ Template.Tasks.events({
         }
     }, 
 
-     'click .edit-task': function (event, instance) {
+    'click .edit-task': function (event, instance) {
         //pego os valores daquele elemento da interface e jogo na modal
         const task_id = event.target.id;
         const task = Tasks.findOne({_id: task_id})

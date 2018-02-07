@@ -1,8 +1,9 @@
 Template.BroochList.onCreated(function () {
     //pego os parametros da url e me inscrevo nas publishs necessárias
     const self = this;
+    const class_id = FlowRouter.getParam('id');
     self.autorun(function () {
-        self.subscribe('broochs');
+        self.subscribe('broochs', class_id);
 		self.subscribe('Images');
     });
 
@@ -27,11 +28,18 @@ Template.Brooch.events({
         $('#brooch-name').focus();
     },
 
-    'click .remove': function (event, intance) {
+    'click .remove': function (event, instance) {
         var brooch = this.name;
         if(confirm("Deseja mesmo deletar o broche "+ brooch)){
-            Meteor.call('brooch.delete', this._id);
-            Materialize.toast('Classe Excluida com Sucesso!', 3000);
+            Meteor.call('brooch.delete', this._id, function(error, result){
+                if(error){
+                    console.log
+                    alert('Você não pode excluir esse broche porque algum aluno já possui-o');
+                }
+                else{
+                    Materialize.toast('Broche Excluido com Sucesso!', 3000);
+                }
+            });
         }
     },
     
@@ -84,7 +92,7 @@ Template.NewBrooch.events({
 		const target = e.target;
 
         //crio um objeto com os valores inseridos pelo usuario sem a imagem
-		let new_brooch = {name: target.name.value, description: target.description.value, points: target.points.value};
+		let new_brooch = {name: target.name.value, description: target.description.value, points: target.points.value, class_id: FlowRouter.getParam('id')};
 
         //pego a imagem
 	    const fileArray = target.image.files;
@@ -93,18 +101,20 @@ Template.NewBrooch.events({
 	    
 
 	   Meteor.call('brooch.insert', new_brooch, function(error, result){
-           //caso a inserção seja um sucesso inicio o upload da imagem
+        //caso a inserção seja um sucesso inicio o upload da imagem
+        if(!error){
             if(fileArray && image){
-            const upload = Images.insert({
-                file: image,
-                fileName: nomeArquivo
-            });
-            //ao fim do upload, chamo o metodo createImages no servidor para salvar o nome da imagem na classe
+                const upload = Images.insert({
+                    file: image,
+                    fileName: nomeArquivo
+                });
+                //ao fim do upload, chamo o metodo createImages no servidor para salvar o nome da imagem na classe
             upload.on('end', function (error, fileObj) {
                     Meteor.call('brooch.createImages', fileObj.name, result);
                     
                 });
             }
+          }
         });
 
 		template.find(".new-brooch-form").reset();

@@ -65,16 +65,21 @@ TestSchema = new SimpleSchema({
     },
 
     status:{
-        type: Boolean,
+        type: SimpleSchema.Integer,
     },
 
-    start_date:{
+    start_time:{
         type: Date,
         optional: true
     },
 
-    end_date:{
+    end_time:{
         type: Date,
+        optional: true
+    },
+
+    publishing:{
+        type: Boolean,
         optional: true
     },
 
@@ -102,10 +107,49 @@ Meteor.methods({
 
         //crio o status (indica se está publicado ou não) de um teste. O padrão é false
         //TO DO: pensar em um nome mais intuitivo pra esse campo
-        new_test.status = false;
+        new_test.status = 0;
         //crio o array de questões inicial (vazio)
         new_test.questions = [];
         Tests.insert(new_test);
+    },
+
+    'tests.update': function(name, points, desc, test_id){
+
+        //TO DO: adicionar verificação de status
+        if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
+            throw new Meteor.Error('not-authorized');
+        
+        Tests.update({ _id: test_id }, {
+            $set: {
+                name: name,
+                description: desc,
+                points: points
+            }
+        });
+
+    },
+
+    'tests.updateTime':  function(test_id, new_timeframe){
+        if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
+            throw new Meteor.Error('not-authorized');
+        
+        if(new_timeframe.start_time >= new_timeframe.end_time){
+            throw new Meteor.Error(500, 'invalid_timeframe');
+        }
+
+        Tests.update({_id: test_id}, 
+                    {$set: {
+                            start_time: new_timeframe.start_time,
+                            end_time: new_timeframe.end_time
+                        }
+                    })
+    },
+
+    'tests.delete':  function(test_id){
+        if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
+            throw new Meteor.Error('not-authorized');
+        
+        Tests.remove({_id: test_id})
     },
 
     'questions.insert': function(new_question) { 
@@ -133,6 +177,33 @@ Meteor.methods({
         //atualizo o array na collection e retorno o numero da questão para o upload da imagem
         Tests.update({_id: new_question.test_id}, { $push: {questions: new_question}})
         return new_question.number;
+    },
+    
+    'questions.update' (edited_question){
+
+        if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher'])){
+            throw new Meteor.Error('not-authorized');
+        }
+
+        //crio uma variavel para armazenar o numero da resposta correta temporariamente
+        let correct_answer;
+
+        edited_question.answers.forEach(function(value, index, array){
+            value.number = index + 1
+            if(value.marked === true){
+                correct_answer = value.number
+            }
+        })
+
+        edited_question.correct_answer = correct_answer;
+        Tests.update({_id: edited_question.test_id, 'questions.number': parseInt(edited_question.number)}, 
+        {$set: 
+            {
+                'questions.$.statement': edited_question.statement,
+                'questions.$.answers': edited_question.answers,
+                'questions.$.correct_answer': edited_question.correct_answer
+            }
+        });
     },
 
     //atualiza a questão com o nome da imagem dela

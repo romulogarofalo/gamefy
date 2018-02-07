@@ -12,6 +12,12 @@
     font-size: 16px
 }
 
+
+/*criar classe especifica pra isso*/
 .edit-task{
+    margin-right: 70px
+}
+
+.edit-test{
     margin-right: 70px
 }

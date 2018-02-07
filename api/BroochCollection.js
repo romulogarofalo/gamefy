@@ -12,10 +12,12 @@ BroochSchema = new SimpleSchema({
     description: {
         type: String,
     },
+
     imageName: {
         type: String,
         optional: true
     },
+
     owner:{
         type: String,
         autoValue: function(){
@@ -24,7 +26,19 @@ BroochSchema = new SimpleSchema({
     },
 
     points: {
-        type: SimpleSchema.Integer,
+        type: SimpleSchema.Integer
+    },
+
+    class_id: {
+        type: String
+    },
+
+    students:{
+        type: Array
+    },
+
+    'students.$':{
+        type: String
     },
 
     createdAt:{
@@ -43,10 +57,13 @@ Meteor.methods({
     'brooch.insert'(new_brooch) {
         if (! Meteor.userId || !Roles.userIsInRole(Meteor.user(),['teacher'])) 
             throw new Meteor.Error('not-autorized');
+            console.log(new_brooch )
         let brooch_id = Broochs.insert({
             name:new_brooch.name,
             description:new_brooch.description,
-            points: new_brooch.points
+            points: new_brooch.points,
+            class_id: new_brooch.class_id,
+            students: []
         });
         return brooch_id;
     },
@@ -67,6 +84,7 @@ Meteor.methods({
                     const updated_points = Broochs.findOne({_id: brooch_id}).points + Enrollments.findOne({_id: selected[s].id}).points;
                     Enrollments.update({_id: selected[s].id}, {$set: {points: updated_points}});
                     Enrollments.update({_id: selected[s].id}, {$push: {badges: brooch_id}});
+                    Broochs.update({_id: brooch_id}, {$push: {students: selected[s].id}})
                 }
             }
             else{
@@ -75,6 +93,7 @@ Meteor.methods({
                     const updated_points = Enrollments.findOne({_id: selected[s].id}).points - Broochs.findOne({_id: brooch_id}).points;
                     Enrollments.update({_id: selected[s].id}, {$set: {points: updated_points}});
                     Enrollments.update({_id: selected[s].id}, {$pull: {badges: brooch_id}});
+                    Broochs.update({_id: brooch_id}, {$pull: {students: selected[s].id}})
                 }
             }
         }
@@ -98,8 +117,13 @@ Meteor.methods({
     //removo o broche da collection
     //TO DO: impedir que ele seja removido caso algum aluno possua-o ou removê-lo automaticamente de todos os alunos
     'brooch.delete'(id_brooch) {
+
+        if(Broochs.findOne({_id: id_brooch}).students.length > 0)
+            throw new Meteor.Error(500, 'brooch-given');
+
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
+            
         Broochs.remove(id_brooch);
     }
 });

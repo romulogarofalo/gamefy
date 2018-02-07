@@ -11,7 +11,6 @@ Meteor.publish('classes', function() {
             }).map(function (enrollment) { 
                 return enrollment.class_id; 
             });
-        console.log(classes_id);
         return Classes.find({
             _id: {$in: classes_id}
         });
@@ -47,24 +46,34 @@ Meteor.publish('tests', function(class_id) {
             class_id: class_id
         });    
     }
+    else{
+        return [Enrollments.find({
+            student_id: Meteor.userId(), class_id: class_id}, {fields: {student_name: 1, tests: 1}
+        }),
+        Tests.find({
+            class_id: class_id}, {fields:{name: 1}
+        })];  
+    }
 });
 
 Meteor.publish('test-single', function(test_id) {
     if (Roles.userIsInRole(this.userId, ['teacher'])){
         return Tests.find({
             _id: test_id
-        }, {fields: {name: 1, questions: 1}});    
+        }, {fields: {name: 1, questions: 1, class_id: 1, start_time: 1, end_time: 1}});    
     }
 });
 
-Meteor.publish('broochs', function() {
+Meteor.publish('broochs', function(class_id) {
     if (Roles.userIsInRole(this.userId, ['teacher'])){
         return Broochs.find({
-            owner: this.userId
+            owner: this.userId,
+            class_id: class_id
         }); 
     } 
     else{
-         let badges = Enrollments.findOne({student_id: Meteor.userId()}).badges;
+         let badges = Enrollments.findOne({student_id: Meteor.userId(), class_id: class_id}).badges;
+         console.log(Enrollments.findOne({student_id: Meteor.userId()}));
          return Broochs.find({_id: {$in: badges}});
     }  
 });

@@ -71,8 +71,8 @@ Template.ClassList.helpers({
     prevClasses: () => {
         const instance = Template.instance();
         return function () {
-            if (instance.state.get('skip') >= 3) {
-                instance.state.set('skip', instance.state.get('skip') - 3);
+            if (instance.state.get('skip') >= 1) {
+                instance.state.set('skip', instance.state.get('skip') - 1);
             }
         }
     },
@@ -82,7 +82,7 @@ Template.ClassList.helpers({
         const instance = Template.instance();
         return function () {
             if (instance.state.get('skip') + 3 < Classes.find({}).count()) {
-                instance.state.set('skip', instance.state.get('skip') + 3);
+                instance.state.set('skip', instance.state.get('skip') + 1);
             }
         }
     }

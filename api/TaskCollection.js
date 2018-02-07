@@ -70,7 +70,6 @@ Tasks.attachSchema(TaskSchema);
     'tasks.update' (name, desc, task_id){
          if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
-        console.log(Tasks.findOne({_id: task_id}))
          Tasks.update({ _id: task_id }, {
             $set: {
                 name: name,

@@ -35,6 +35,31 @@ StudentTaskSchema = new SimpleSchema({
 
 });
 
+StudentTestSchema = new SimpleSchema({
+    test_id: {
+        type: String,
+    },
+
+    done:{
+        type: Boolean,
+    },
+
+    max_points:{
+        type: SimpleSchema.Integer,
+    },
+
+    points:{
+        type: SimpleSchema.Integer,
+        optional: true,
+    },
+
+    correct_questions:{
+        type: SimpleSchema.Integer,
+        optional: true,
+    },
+
+});
+
 //defino a collection de uma matricula
 EnrollmentSchema = new SimpleSchema({
     student_id: {
@@ -60,6 +85,15 @@ EnrollmentSchema = new SimpleSchema({
 
     "tasks.$":{
         type: StudentTaskSchema,
+    },
+
+    tests:{
+        type: Array,
+        optional: true
+    },
+
+    "tests.$":{
+        type: StudentTestSchema,
     },
 
     badges:{ 
@@ -124,6 +158,17 @@ if (Meteor.isServer) {
                     });
                 }         
             });
+        },
+
+        'enrollments.delete'(enrollment_id, class_id) {
+
+            if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher'])){
+                throw new Meteor.Error('not-authorized');
+            }
+
+            Enrollments.remove(enrollment_id)
+            Tasks.update({class_id: class_id}, {$pull: {students: enrollment_id}})
+            Broochs.update({class_id: class_id}, {$pull: {students: enrollment_id}})
         },
 
         //esse metodo marca ou desmarca a realização de uma tarefa por um aluno

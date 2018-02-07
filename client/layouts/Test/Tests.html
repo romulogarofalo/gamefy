@@ -17,12 +17,21 @@
                     <a href="/test/{{_id}}">
                         <span class="title">{{name}}</span>
                         <p class="task-points indigo-text text-darken-3">{{points}} </p>
-                        <p>{{#if status}} Questionario publicado{{else}}Questionário não publicado{{/if}}</p>
+                        <p>{{publishStatus _id}}</p>
                     </a>
                     <div>
-                    <a class="secondary-content delete-task"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
-                    <a class="secondary-content edit-task"><i class="medium black-text material-icons" id="{{_id}}">edit</i></a>
+                    <a class="secondary-content delete-test"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
+                    <a class="secondary-content edit-test"><i class="medium black-text material-icons" id="{{_id}}">edit</i></a>
                     </div>
+                </div>
+                {{/each}}
+            {{else}}
+                {{#each testsStudent}}                
+                    <div class="collection-item avatar">
+                    <a href="/test/{{test_id}}">
+                        <span class="title">{{testName test_id}}</span>
+                        <p class="task-points indigo-text text-darken-3">{{max_points}} </p>
+                    </a>
                 </div>
                 {{/each}}
             {{/if}}

@@ -4,6 +4,7 @@
         {{> NewTask}}
         {{> EditTask}}
         {{> NewTest}}
+        {{> EditTest}}
     {{/if}}
     <div class="section">
         <div class="row">
@@ -19,6 +20,7 @@
     <div class="section">
         <div class="row">
             {{> ClassTabs}}
+            <!--Verificar se o tabData é necessario-->
             {{> Template.dynamic template=tab data=tabData}}
         </div>
     </div>

@@ -49,5 +49,21 @@ Template.Students.events({
     'click .ranking': function(event, template) { 
          const instance = Template.instance();
          instance.state.set('orderBy', 'ranking');
-    }  
+    },
+
+    'click .delete-student': function(event, template) { 
+        const student_name = this.student_name;
+        const class_id = FlowRouter.getParam('id')
+        if(confirm("Deseja mesmo deletar o aluno " + student_name +". Isso excluirá todo o progesso dele nesta classe")){
+            Meteor.call('enrollments.delete', this._id, class_id, function(error, result){
+                if(error){
+                    console.log(error)
+                }
+                else{
+                    Materialize.toast('Aluno Excluido com Sucesso!', 3000);
+                }
+            });
+        }
+    }
+
 });

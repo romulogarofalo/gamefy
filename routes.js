@@ -41,7 +41,12 @@ FlowRouter.route('/task/:task_id', {
 FlowRouter.route('/test/:test_id', {
     name:'test',
     action(){
-        BlazeLayout.render('MainLayout', {main: 'TestSingle'});
+        if (Roles.userIsInRole(Meteor.user(),['teacher'])){
+            BlazeLayout.render('MainLayout', {main: 'TestSingle'});
+        }
+        else{
+            BlazeLayout.render('MainLayout', {main: 'StudentTest'}); 
+        }
     }
 });
 

@@ -17,8 +17,60 @@ Template.Tests.helpers({
         }
     },
 
+    publishStatus: (test_id)=>{
+        switch (Tests.findOne({_id: test_id}).status){
+            case 0:
+                return "Questionário não publicado"
+                break;
+        
+           case 1:
+                return "Questionário publicado"
+                break;
+           case 2:
+                return "Questionário encerrado"
+                break;
+        }
+    },
+
     //retorna os questionários da classe para usar no each
     testsTeacher: ()=>{
         return Tests.find({}); 
-    }
+    },
+
+    testName: (test_id)=> {
+        return Tests.findOne({_id: test_id}).name
+    },
+
+    testsStudent: ()=>{
+        return Enrollments.findOne({}).tests
+    },
+});
+
+Template.Tests.events({ 
+    'click .delete-test': function(event, template) { 
+        if(confirm("Deseja mesmo deletar esse questionario?"))
+        {
+            //chama o metodo delete da API de questionários (TasksCollection) passando o id do questionário
+            Meteor.call('tests.delete', event.target.id, function(error, success) { 
+                //TO DO: adicionar situação de user não autorizado aqui e situação de questionário já publicado
+                if (error) { 
+                    Materialize.toast('Questionário excluido com sucesso!', 3000);   
+                }
+            });
+        }
+    },
+
+    'click .edit-test': function (event, instance) {
+        //pego os valores daquele elemento da interface e jogo na modal
+        const test_id = event.target.id;
+        const test = Tests.findOne({_id: test_id})
+        const name = test.name
+        const description = test.description
+        const points = test.points
+        $('#edit-test').modal('open');
+        $('#question-id').val(test_id);
+        $('#name-test').val(name);
+        $('#points-test').val(points);
+        $('#description-test').val(description);
+    }, 
 });

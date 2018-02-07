@@ -7,22 +7,7 @@
                     <textarea id="statement" name="statement" class="materialize-textarea"></textarea>
                     <label for="statement">Enunciado</label>
                 </div>
-                <div class="row">
-                    <div class="col s9">
-                        <div class="input-field">
-                             <input type="text" id="new-answer" name="new-answer"/>
-                             <label for="name">Resposta</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <a class="waves-effect waves-teal btn-flat" id="add-answer">Adicionar</a>
-                        </div>
-                    </div>
-                </div>
-                {{#each answerList}}
-                    {{> SingleAnswer}}
-                {{/each}}
+                {{> AnswerList answer_list=newQuestionArray}}
                 <div class="file-field input-field">
         '           <div class="btn">
                         <span>Imagem</span>

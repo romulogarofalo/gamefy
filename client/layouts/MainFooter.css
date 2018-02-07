@@ -1,0 +1,11 @@
+
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  #__blaze-root {
+    display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
