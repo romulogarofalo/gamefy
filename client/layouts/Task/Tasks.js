@@ -15,11 +15,11 @@ Template.Tasks.helpers({
     },
 
     tasksTeacher: ()=>{
-        return Tasks.find({}); 
+        return Tasks.find({}, {sort: {createdAt: -1}}); 
     },
 
     tasksStudent: ()=>{
-        return Enrollments.findOne().tasks
+        return Enrollments.findOne().tasks.reverse()
     },
 
     taskName: (task_id) =>{

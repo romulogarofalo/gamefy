@@ -1,5 +1,63 @@
 <template name="StudentTest">
-    <div class="collection-item avatar">
-        <span class="title">Oi</span>
-    </div>
+  {{#if Template.subscriptionsReady}}
+    {{#if testPublished}}
+      {{#if testPending}}
+        <div class="section">
+          <div class="row">
+            <div class="col s4">  
+              <a href="/class/{{testClass}}" class="waves-effect waves-light btn-large"><i class="material-icons left white-text">arrow_back</i>Voltar</a>
+            </div>
+            <div class="col s4">  
+              <h3>Questionário: {{testName}}</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col offset-s4 s4">
+              <p class="center-align">{{testDescription}}</p>
+            </div>
+            <div class="col s4">
+              <a class="waves-effect waves-light btn right" id="finish-test">Finalizar</a>
+            </div>
+          </div>
+        </div>
+      {{#with testQuestion}}
+        <div class="divider"></div>
+        <div class="section">
+          <div class="row">
+            <div class="col s12 center-align">
+              <img class="responsive-img" src="{{imageFile imageName}}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 center-align">
+              <span class="black-text">
+                {{statement}} 
+              </span>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col s2 offset-s5">
+              {{#each answers}}
+                <p>
+                  <input name="question-{{questionNumber}}" type="radio" id="{{number}}" checked="{{isChecked number}}" />
+                  <label for="{{number}}">{{answer_text}}</label>
+                </p>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      {{/with}}
+      <div class="divider"></div>
+      <div class="section">
+        <div class="row">
+          {{> PageButtons hasElements=true previous=prevQuestion next=nextQuestion}}
+        </div>
+      </div>
+      {{else}}
+        <h3>Você já realizou esse teste</h3>
+      {{/if}}
+    {{else}}
+      <h3> Esse teste não está mais disponível</h3>
+    {{/if}}
+  {{/if}}
 </template>

@@ -15,7 +15,7 @@ Template.EditQuestion.events({
         const target = event.target;
         const id = FlowRouter.getParam('test_id');
 
-
+        //crio o objeto com os dados da questão e o que será alterado
         const edited_question = {
             test_id: FlowRouter.getParam('test_id'),
             number: $('#question-id').val(),

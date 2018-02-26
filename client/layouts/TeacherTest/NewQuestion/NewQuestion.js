@@ -6,6 +6,10 @@ Template.NewQuestion.onCreated(function() {
 });
 
 Template.NewQuestion.helpers({
+    /*
+        passo o estado do template para outro template, a fim de reutilizar
+        a lista de respostas em dois templates diferentes
+    */
     newQuestionArray: () => {
         return Template.instance().state
     }
@@ -45,7 +49,8 @@ Template.NewQuestion.events({
                         Meteor.call('questions.createImages', fileObj.name, result, id);                
                     });
                     $('#new-question').modal('close');
-                    template.find(".new-question-form").reset();    
+                    template.find(".new-question-form").reset();
+                    template.state.set('answerList', []);    
                 }
             }
         });     

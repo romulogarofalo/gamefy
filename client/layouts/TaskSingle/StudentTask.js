@@ -28,7 +28,6 @@ Template.StudentTask.events({
     'click .toggle-done' (event, template) {
         const task_id = FlowRouter.getParam('task_id');
         let done_parameters = {enrollment_id: this._id, task_id: task_id, set_checked: !this.tasks[0].done};
-        console.log(template.$('.rating').data('userrating'));
         if(Tasks.findOne({}).grade && this.tasks[0].done == false){
             done_parameters.grade = template.$('.rating').data('userrating') == null ? 5 : done_parameters['grade'] = template.$('.rating').data('userrating');
         }

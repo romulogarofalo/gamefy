@@ -13,14 +13,16 @@
           </span>
           {{#each questionAnswers answers}}
             <p>
-              <input name="saved-question" type="radio" id="{{answer_name}}" />
-              <label for="{{answer_name}}">{{answer_text}}</label>
+              <input name="saved-question-{{questionNumber}}" type="radio" id="{{number}}" checked="{{isCorrect number}}" disabled/>
+              <label for="{{number}}" >{{answer_text}}</label>
             </p>
           {{/each}}
           </div>
          <div class="col s1">
+           {{#if testEditable}}
                <a class="delete-question"><i class="medium red-text material-icons">delete</i></a>
                <a class="edit-question"><i class="medium black-text material-icons">edit</i></a>
+           {{/if}}
          </div>  
       </div>
     </div>

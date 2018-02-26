@@ -10,9 +10,16 @@ Template.EditTest.events({
         let points = $('#points-test').val();
         let desc = $('#description-test').val();
         let test_id = $('#test-id').val();
-        Meteor.call('tests.update', name, points, desc, test_id);
-        template.find(".edit-test-form").reset();
-        $('#edit-test').modal('close');
-
+        console.log(test_id)
+        Meteor.call('tests.update', name, points, desc, test_id, function(error, success) { 
+            if (error.error === 'test-already-published') { 
+                alert('Este teste já foi publicado e não pode ser mais editado');
+            } 
+            if (success) { 
+                 Materialize.toast('Questionário Editado com Sucesso!', 3000);  
+            }
+            template.find(".edit-test-form").reset();
+            $('#edit-test').modal('close'); 
+        });
     }
 });

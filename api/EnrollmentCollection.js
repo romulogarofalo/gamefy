@@ -53,7 +53,7 @@ StudentTestSchema = new SimpleSchema({
         optional: true,
     },
 
-    correct_questions:{
+    correct_answers:{
         type: SimpleSchema.Integer,
         optional: true,
     },

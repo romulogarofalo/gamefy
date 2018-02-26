@@ -1,54 +1,7 @@
 <template name="TestSingle">
-    {{> NewQuestion}}
-    {{> EditQuestion answer_list=testSingleArray}}
-    {{#if Template.subscriptionsReady}}
-    <div class="section">
-        <div class="row">
-          <div class="col s4">  
-                <a href="/class/{{testClass}}" class="waves-effect waves-light btn-large"><i class="material-icons left white-text">arrow_back</i>Voltar</a>
-          </div>
-          <div class="col s4"> 
-            <h3>Questionário: {{testName}}</h3>
-          </div>
-        </div>
-    </div>
-    {{#each testQuestion}}
-      {{> Question}}
-    {{/each}}
-     {{/if}}
-    <div class="divider"></div>
-    <div class="section">
-      <form class="save-test-form">
-        <div class="row">
-          <div class="col s6">
-            <div class="input-field">
-              <input type="text" id="start_date" class="datepicker"/>
-              <label for="start_date">Começa</label>
-            </div>
-            <div class="input-field">
-               <input type="text" id="start_time" class="timepicker"/>
-               <label for="start_time" class="active">E na hora</label>
-            </div>
-          </div>
-          <div class="col s6">
-            <div class="input-field">
-                    <input type="text" id="end_date" class="datepicker"/>
-                    <label for="end_date" class="active">Termina em:</label>
-            </div>
-            <div class="input-field">
-                    <input type="text" id="end_time" class="timepicker"/>
-                    <label for="end_time" class="active">E na hora:</label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="center-align">
-          <button class="btn-large waves-effect waves-light" type="submit" name="action">Salvar Janela de tempo
-                    <i class="material-icons right">save</i>
-          </button>
-          </div>
-        </div>
-      </form>
-    </div>
-     {{> AddButton add=addTest}}
+    {{#if isInRole 'teacher'}}
+        {{> TeacherTest}}
+    {{else}}
+        {{> StudentTest}}
+    {{/if}}
 </template>

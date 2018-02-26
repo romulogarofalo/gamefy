@@ -34,7 +34,7 @@ Template.Tests.helpers({
 
     //retorna os questionários da classe para usar no each
     testsTeacher: ()=>{
-        return Tests.find({}); 
+        return Tests.find({},{sort: {createdAt: -1}}); 
     },
 
     testName: (test_id)=> {
@@ -42,8 +42,13 @@ Template.Tests.helpers({
     },
 
     testsStudent: ()=>{
-        return Enrollments.findOne({}).tests
+        return Enrollments.findOne({}).tests.reverse()
     },
+
+    testPublished: (test_id)=> {
+        return Tests.findOne({_id: test_id}).status == 1
+    },
+
 });
 
 Template.Tests.events({ 
@@ -53,7 +58,10 @@ Template.Tests.events({
             //chama o metodo delete da API de questionários (TasksCollection) passando o id do questionário
             Meteor.call('tests.delete', event.target.id, function(error, success) { 
                 //TO DO: adicionar situação de user não autorizado aqui e situação de questionário já publicado
-                if (error) { 
+                if (error.error == 'test-already-published') {
+                    alert('Este teste já foi publicado e não pode ser mais excluido');
+                } 
+                if (success) { 
                     Materialize.toast('Questionário excluido com sucesso!', 3000);   
                 }
             });
@@ -63,12 +71,13 @@ Template.Tests.events({
     'click .edit-test': function (event, instance) {
         //pego os valores daquele elemento da interface e jogo na modal
         const test_id = event.target.id;
+        console.log(test_id)
         const test = Tests.findOne({_id: test_id})
         const name = test.name
         const description = test.description
         const points = test.points
         $('#edit-test').modal('open');
-        $('#question-id').val(test_id);
+        $('#test-id').val(test_id);
         $('#name-test').val(name);
         $('#points-test').val(points);
         $('#description-test').val(description);

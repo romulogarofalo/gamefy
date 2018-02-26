@@ -25,4 +25,16 @@ Template.AnswerList.events({
         
     },
 
+    'click .delete-answer': function (event, template) {
+        var answer = this.answer_name;
+        console.log(answer)
+        if(confirm("Deseja mesmo deletar essa resposta")){
+            let answer_list = template.data.answer_list.get('answerList');
+            const index = answer_list.findIndex(single_answer => single_answer.answer_name == answer);
+            answer_list.splice(index, 1);
+            console.log(answer_list)
+            template.data.answer_list.set('answerList', answer_list);
+        }
+    }
+
 });

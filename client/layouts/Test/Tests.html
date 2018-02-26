@@ -26,13 +26,16 @@
                 </div>
                 {{/each}}
             {{else}}
-                {{#each testsStudent}}                
-                    <div class="collection-item avatar">
-                    <a href="/test/{{test_id}}">
-                        <span class="title">{{testName test_id}}</span>
-                        <p class="task-points indigo-text text-darken-3">{{max_points}} </p>
-                    </a>
-                </div>
+                {{#each testsStudent}}
+                    {{#if testPublished test_id}}                
+                        <div class="collection-item avatar">
+                            <a href="/test/{{test_id}}">
+                                <span class="title">{{testName test_id}}</span>
+                                <p class="task-points indigo-text text-darken-3">{{max_points}} </p>
+                                <p class="indigo-text text-darken-3">Você{{#if done}} já realizou{{else}} ainda não realizou{{/if}} este teste</p>
+                            </a>
+                        </div>
+                    {{/if}}
                 {{/each}}
             {{/if}}
         </div>

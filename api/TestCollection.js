@@ -93,6 +93,21 @@ TestSchema = new SimpleSchema({
         type: QuestionSchema,
     },
 
+    students_done: {
+        type: Array
+    },
+
+    'students_done.$': {
+        type: String
+    },
+
+    createdAt:{
+        type: Date,
+        autoValue: function(){
+            return new Date()
+        }
+    }
+
 });
 
 Tests.attachSchema(TestSchema);
@@ -110,6 +125,7 @@ Meteor.methods({
         new_test.status = 0;
         //crio o array de questões inicial (vazio)
         new_test.questions = [];
+        new_test.students_done = [];
         Tests.insert(new_test);
     },
 
@@ -118,6 +134,14 @@ Meteor.methods({
         //TO DO: adicionar verificação de status
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
+        
+        const test = Tests.findOne(test_id);
+
+        console.log(test_id)
+
+        if(test.status != 0){
+            throw new Meteor.Error('test-already-published');
+        }
         
         Tests.update({ _id: test_id }, {
             $set: {
@@ -133,8 +157,15 @@ Meteor.methods({
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
         
+        //verifica se a janela de tempo que o usuário deseja salvar é possível
         if(new_timeframe.start_time >= new_timeframe.end_time){
             throw new Meteor.Error(500, 'invalid_timeframe');
+        }
+
+        const test = Tests.findOne(test_id);
+
+        if(test.status != 0){
+            throw new Meteor.Error('test-already-published');
         }
 
         Tests.update({_id: test_id}, 
@@ -149,7 +180,74 @@ Meteor.methods({
         if (!Meteor.userId() || !Roles.userIsInRole(Meteor.user(), ['teacher']))
             throw new Meteor.Error('not-authorized');
         
+        const test = Tests.findOne(test_id);
+
+        //verifico se o teste está em estado de publicado
+        if(test.status != 0){
+            throw new Meteor.Error('test-already-published');
+        }
+
         Tests.remove({_id: test_id})
+    },
+
+    /*
+        finalizo o questionário do aluno, verificando as respostas certas
+        e salvando os dados dessa realização do documento da matricula dele
+    */
+    'tests.endTest': function (test_id, student_answers) {
+        if (Meteor.isServer) {
+    
+            const user_id = Meteor.userId();
+
+            //verifico se está logado e se é aluno
+            if (! user_id || !Roles.userIsInRole(Meteor.user(),['student'])){
+                throw new Meteor.Error('not-authorized');
+            }
+
+            const test = Tests.findOne(test_id)
+            
+            //verifico se o aluno já realizou o teste anteriormente
+            if(test.students_done.find(student_done => user_id === student_done)){
+                throw new Meteor.Error('test-already-done');
+            }
+
+            //verifico se o teste está em estado de publicado
+            if(test.status != 1){
+                throw new Meteor.Error('test-not-published');
+            }
+
+            const class_id = test.class_id;
+            const max_points = test.points;
+            const questions = test.questions;
+
+            let correct_answers = 0;
+
+            //a cada questão, comparo a resposta do aluno com a correta e, caso seja, incremento a quantidade de corretas
+            questions.forEach(function(question){
+                let answer = student_answers.find(answer => answer.question_number === question.number)
+                if(question.correct_answer == answer.answer_number){
+                    correct_answers++;
+                }
+            });
+
+            //calculo a pontuação final do aluno
+            const student_points = (correct_answers/questions.length) * max_points
+
+            const enrollment = Enrollments.findOne({student_id: user_id, class_id: class_id})
+
+            const updated_points = enrollment.points + student_points
+
+            Enrollments.update(
+                {_id: enrollment._id, 'tests.test_id': test_id},
+                {$set: {points: updated_points,  'tests.$.done': true, 'tests.$.points': student_points, 'tests.$.correct_answers': correct_answers}}
+            );
+
+            /*
+                atualizo o array de alunos que realizaram o questionário na collection de questionários
+                para facilitar certas consultas futuras
+            */
+            Tests.update(test_id, {$push: {students_done: enrollment._id}});
+        }
     },
 
     'questions.insert': function(new_question) { 
@@ -157,6 +255,12 @@ Meteor.methods({
         //verifico se está logado e se é professor
         if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher'])){
             throw new Meteor.Error('not-authorized');
+        }
+
+        const test = Tests.findOne(new_question.test_id);
+
+        if(test.status != 0){
+            throw new Meteor.Error('test-already-published');
         }
 
         //crio uma variavel para armazenar o numero da resposta correta temporariamente
@@ -183,6 +287,12 @@ Meteor.methods({
 
         if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher'])){
             throw new Meteor.Error('not-authorized');
+        }
+
+        const test = Tests.findOne(test_id)
+
+        if(test.status != 0){
+            throw new Meteor.Error('test-already-published');
         }
 
         //crio uma variavel para armazenar o numero da resposta correta temporariamente
@@ -213,6 +323,17 @@ Meteor.methods({
 
     //remove a questão indicada do array de questões daquele teste
     'questions.delete' (question_number, test_id){
+
+        if (! Meteor.userId() || !Roles.userIsInRole(Meteor.user(),['teacher'])){
+            throw new Meteor.Error('not-authorized');
+        }
+
+        const test = Tests.findOne(test_id)
+
+        if(test.status != 0){
+            throw new Meteor.Error('test-already-published');
+        }
+
         Tests.update({_id: test_id}, { $pull: { questions: {number: question_number}}})
     }
      
