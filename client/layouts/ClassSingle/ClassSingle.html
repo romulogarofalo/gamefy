@@ -5,14 +5,20 @@
         {{> EditTask}}
         {{> NewTest}}
         {{> EditTest}}
+        {{> TestChart}}
     {{/if}}
     <div class="section">
         <div class="row">
           <div class="col s4">  
                 <a href="/main" class="waves-effect waves-light btn-large"><i class="material-icons left white-text">arrow_back</i>Voltar</a>
           </div>
-          <div class="col s8"> 
+          <div class="col s4"> 
             <h3>Classe: {{class.name}}</h3>
+          </div>
+          <div class="col s4">
+                {{#if isInRole 'teacher'}} 
+                    <a class="waves-effect waves-light btn-large right" id="create-report"><i class="material-icons right white-text">assessment</i>Gerar Relatório</a>
+                {{/if}}
           </div>
         </div>
     </div>

@@ -29,7 +29,7 @@ Meteor.setInterval(function() {
         Enrollments.update(
             {class_id: test.class_id}, 
             { $push: {tests: { test_id: test._id, done: false, max_points: test.points}}
-        });
+        },{ multi: true });
     });
 
     Tests.update(
