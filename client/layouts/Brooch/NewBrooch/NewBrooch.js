@@ -20,11 +20,9 @@ Template.Brooch.events({
         var descr = this.description;
 		var id = this._id;
         $('#edit-brooch').modal('open');
-        console.log(nome);
-        console.log(descr);
 		document.querySelector('#spanId').textContent = id;
-        document.querySelector('#nameBrooch').value = nome;
-        document.querySelector('#descriptionBrooch').value = descr;
+        document.querySelector('#name-edit').value = nome;
+        document.querySelector('#description-edit').value = descr;
         $('#brooch-name').focus();
     },
 
@@ -83,6 +81,26 @@ Template.BroochList.helpers({
 		}
 	},
 
+    //levo o usuário para a página de classes anterior, caso ela exista
+    prevBroochs: () => {
+        const instance = Template.instance();
+        return function () {
+            if (instance.state.get('skip') >= 1) {
+                instance.state.set('skip', instance.state.get('skip') - 1);
+            }
+        }
+    },
+
+    //levo o usuário para a próxima página de classes, caso ela exista
+    nextBroochs: () => {
+        const instance = Template.instance();
+        return function () {
+            if (instance.state.get('skip') + 3 < Broochs.find({}).count()) {
+                instance.state.set('skip', instance.state.get('skip') + 1);
+            }
+        }
+    }
+
 });
 
 Template.NewBrooch.events({
@@ -119,7 +137,7 @@ Template.NewBrooch.events({
 
 		template.find(".new-brooch-form").reset();
 		$('#new-brooch').modal('close');
-		
+
     }
 });
 

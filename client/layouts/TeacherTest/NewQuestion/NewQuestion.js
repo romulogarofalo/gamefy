@@ -37,7 +37,15 @@ Template.NewQuestion.events({
         };
 
         Meteor.call('questions.insert', new_question, (error, result) => {
-            if(!error){
+            if(error){
+                if(error.error == 'test-already-published'){
+                    alert("Este teste já foi publicado e não pode mais ser alterado")
+                }
+                else{
+                    alert("Por favor preencha todos os campos de acordo com as instruções")
+                }
+            }
+            else{
                 if(file_array && image){
                     //caso a inserção seja um sucesso inicio o upload da imagem
                     const upload = Images.insert({
@@ -47,11 +55,12 @@ Template.NewQuestion.events({
                     //ao fim do upload, chamo o metodo createImages no servidor para salvar o nome da imagem na questão
                     upload.on('end', function (error, fileObj) {
                         Meteor.call('questions.createImages', fileObj.name, result, id);                
-                    });
-                    $('#new-question').modal('close');
-                    template.find(".new-question-form").reset();
-                    template.state.set('answerList', []);    
+                    }); 
                 }
+                Materialize.toast('Questão criada com Sucesso!', 3000);
+                $('#new-question').modal('close');
+                template.find(".new-question-form").reset();
+                template.state.set('answerList', []);   
             }
         });     
     }

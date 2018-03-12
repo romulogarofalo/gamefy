@@ -2,9 +2,13 @@
     <div id="new-question" class="modal">
         <div class="modal-content">
             <h4>Nova Questão</h4>
+            <p>
+                Instruções: Uma questão deve possuir enunciado, de 2 a 4 respostas e uma das respostas marcada como correta.
+                A imagem é opcional
+            </p>
             <form class="new-question-form">
                 <div class="input-field">
-                    <textarea id="statement" name="statement" class="materialize-textarea"></textarea>
+                    <textarea id="statement" name="statement" class="materialize-textarea" required="" aria-required="true"></textarea>
                     <label for="statement">Enunciado</label>
                 </div>
                 {{> AnswerList answer_list=newQuestionArray}}

@@ -4,18 +4,17 @@ Template.EditTest.events({
         $('#edit-test').modal('close');
     },
 
-    'click #update': function (event, template) {
+    'submit .edit-test-form': function (event, template) {
         event.preventDefault();
         let name = $('#name-test').val();
         let points = $('#points-test').val();
         let desc = $('#description-test').val();
         let test_id = $('#test-id').val();
-        console.log(test_id)
-        Meteor.call('tests.update', name, points, desc, test_id, function(error, success) { 
-            if (error.error === 'test-already-published') { 
+        Meteor.call('tests.update', name, points, desc, test_id, function(error, success) {
+            if(error){ 
                 alert('Este teste já foi publicado e não pode ser mais editado');
             } 
-            if (success) { 
+            else{ 
                  Materialize.toast('Questionário Editado com Sucesso!', 3000);  
             }
             template.find(".edit-test-form").reset();

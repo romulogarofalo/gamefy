@@ -1,11 +1,12 @@
 <template name="NewEnrollment">
     <div id="new-enrollment" class="modal">
         <div class="modal-content">
+        <h4>Novo aluno</h4>
         <form class="new-enrollment-form">
             <div class="row">
                 <div class="col s12">
                 <div class="input-field">
-                    <input type="text" name="name" id="student-name" />
+                    <input type="text" name="name" id="student-name" required="" aria-required="true" />
                     <label for="student-name" data-error="Nome de aluno inválido">Nome do Aluno</label>
                 </div>
                 </div>

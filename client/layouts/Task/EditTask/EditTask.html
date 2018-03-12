@@ -3,11 +3,17 @@
         <div class="modal-content">
             <h3>Editar Tarefa</h3>
             <form class="edit-task-form">
-                <input type="text" name="name" placeholder="Nome" id="name-task" />
-                <input type="text" name="description" placeholder="Descrição" id="description-task" />
+                <div class="input-field">
+                    <input type="text" name="name" placeholder="Nome" id="name-task" required="" aria-required="true" />
+                    <label for="name-task" class="active">Nome da tarefa</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" name="description" placeholder="Descrição" id="description-task" required="" aria-required="true" />
+                    <label for="description-task" class="active">Descrição</label>
+                </div>
                 <input type="hidden" id="task-id" value=""/>
 
-                <button class="btn waves-effect waves-light" name="action" id="cancel">Cancelar
+                <button class="btn waves-effect waves-light" id="cancel">Cancelar
                     <i class="material-icons right">cancel</i>
                 </button>
                 <button class="btn waves-effect waves-light right" type="submit" name="action" id="update">Atualizar

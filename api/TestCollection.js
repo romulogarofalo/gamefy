@@ -39,7 +39,8 @@ QuestionSchema = new SimpleSchema({
 
     answers: {
         type: Array,
-        maxCount: 4
+        maxCount: 4,
+        minCount: 2
     },
 
     'answers.$': {
@@ -163,10 +164,15 @@ Meteor.methods({
 
         //verifica se a janela de tempo que o usuário deseja salvar é possível
         if (new_timeframe.start_time >= new_timeframe.end_time) {
-            throw new Meteor.Error(500, 'invalid_timeframe');
+            throw new Meteor.Error('invalid-timeframe');
         }
 
         const test = Tests.findOne(test_id);
+
+        //VALOR 1 APENAS PARA TESTE. MUDAR PARA 5 NA VERSÃO FINAL
+        if(test.questions.length < 1){
+            throw new Meteor.Error('not-enough-questions');
+        }
 
         if (test.status != 0) {
             throw new Meteor.Error('test-already-published');
@@ -273,6 +279,7 @@ Meteor.methods({
     },
 
     'tests.report': function (class_id) {
+        
         if (Meteor.isServer) {
             const class_enrollments = Enrollments.find({
                 class_id: class_id
@@ -372,7 +379,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        const test = Tests.findOne(test_id)
+        const test = Tests.findOne(edited_question.test_id)
 
         if (test.status != 0) {
             throw new Meteor.Error('test-already-published');

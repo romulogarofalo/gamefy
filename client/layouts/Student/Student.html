@@ -5,6 +5,8 @@
         <p class="red-text">
             {{points}}
         </p>
-        <a class="delete-student"><i class="medium red-text material-icons">delete</i></a>
+        {{#if isInRole 'teacher'}}
+            <a class="delete-student"><i class="medium red-text material-icons">delete</i></a>
+        {{/if}}
     </a>
 </template>

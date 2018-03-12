@@ -44,6 +44,7 @@ Template.NewTask.events({
 
     Meteor.call('tasks.insert', new_task, (error, result) => {
             if(!error){
+                Materialize.toast('Tarefa Criada com Sucesso!', 3000);
                 $('#new-task').modal('close');
                 template.find(".new-task-form").reset();
             }

@@ -31,8 +31,11 @@
                         <div class="collection-item avatar">
                             <a href="/test/{{test_id}}">
                                 <span class="title">{{testName test_id}}</span>
-                                <p class="task-points indigo-text text-darken-3">{{max_points}} </p>
+                                <p class="task-points indigo-text text-darken-3">Valor: {{max_points}} </p>
                                 <p class="indigo-text text-darken-3">Você{{#if done}} já realizou{{else}} ainda não realizou{{/if}} este teste</p>
+                                {{#if done}}
+                                    <p class="indigo-text text-darken-3">Sua pontuação: {{points}} pontos</p>
+                                {{/if}}
                             </a>
                         </div>
                     {{/if}}

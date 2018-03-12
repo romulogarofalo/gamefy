@@ -23,9 +23,21 @@ Template.EditQuestion.events({
             answers: template.data.answer_list.get('answerList'),
         }
 
-        Meteor.call('questions.update', edited_question);
-        $('#edit-question').modal('close');
-        template.find(".edit-question-form").reset();  
+        Meteor.call('questions.update', edited_question, (error, result) => {
+            if(error){
+                if(error.error == 'test-already-published'){
+                    alert("Este teste já foi publicado e não pode mais ser alterado")
+                }
+                else{
+                    alert("Por favor preencha todos os campos de acordo com as instruções")
+                }
+            }
+            else{
+                Materialize.toast('Questão editada com Sucesso!', 3000);
+                $('#edit-question').modal('close');
+                template.find(".edit-question-form").reset(); 
+            }
+        }); 
     },
 
 });

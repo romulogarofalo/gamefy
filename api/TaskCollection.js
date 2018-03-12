@@ -59,6 +59,10 @@ Tasks.attachSchema(TaskSchema);
 
         Tasks.insert(new_task, function(err, task_id){
 
+            if(err){
+                throw err
+            }
+
             //após inserir a tarefa, adiciono-a nos arrays de tarefas de cada matricula daquela classe
             let inserted_task = Tasks.findOne({_id: task_id});
             Enrollments.update({class_id: inserted_task.class_id}, { $push: 

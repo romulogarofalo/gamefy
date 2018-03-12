@@ -58,10 +58,10 @@ Template.Tests.events({
             //chama o metodo delete da API de questionários (TasksCollection) passando o id do questionário
             Meteor.call('tests.delete', event.target.id, function(error, success) { 
                 //TO DO: adicionar situação de user não autorizado aqui e situação de questionário já publicado
-                if (error.error == 'test-already-published') {
+                if (error) {
                     alert('Este teste já foi publicado e não pode ser mais excluido');
                 } 
-                if (success) { 
+                else { 
                     Materialize.toast('Questionário excluido com sucesso!', 3000);   
                 }
             });

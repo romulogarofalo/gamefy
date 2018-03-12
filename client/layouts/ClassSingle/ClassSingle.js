@@ -97,12 +97,12 @@ Template.ClassSingle.events({
                  });
 
                  const ctx2 = $('#improvement-chart')[0].getContext('2d');
-                 let melhorias = ["-100% ou menos", "De -100% até -50%", "De -50% até - 20%", 
+                 let improvements = ["-100% ou menos", "De -100% até -50%", "De -50% até - 20%", 
                                  "De -20% até -5%", "De -5% até 5%", "De 5% até 20%", "De 20% até 50%", "De 50% até 100%", "Mais de 100%"]
                  var improvement_chart = new Chart(ctx2, {
                      type: 'bar',
                      data: {
-                         labels: melhorias,
+                         labels: improvements,
                          datasets: [{
                              label: 'Melhoria em relação ao teste anterior',
                              data: Object.values(success[1]),

@@ -1,11 +1,14 @@
 <template name="EditQuestion">
     <div id="edit-question" class="modal">
         <div class="modal-content">
-            <h4>Questão</h4>
+            <h4>Editar Questão</h4>
+            <p>
+                Instruções: Uma questão deve possuir enunciado, de 2 a 4 respostas e uma das respostas marcada como correta.
+            </p>
             <form class="edit-question-form">
                 <input type="hidden" id="question-id"/>  
                 <div class="input-field">
-                    <textarea id="statement-edit" name="statement" class="materialize-textarea"></textarea>
+                    <textarea id="statement-edit" name="statement" class="materialize-textarea" required="" aria-required="true"></textarea>
                     <label for="statement" class="active">Enunciado</label>
                 </div>
                 {{> AnswerList answer_list=editQuestionArray}}

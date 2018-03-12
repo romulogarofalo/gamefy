@@ -26,12 +26,12 @@
 				<h1>Você ainda não{{#if isInRole 'teacher'}} criou {{else}} tem {{/if}}
 				nenhum Broche</h1>
 			{{/if}}
-				<div class="row">
-	            {{> PageButtons hasBroochs=hasBroochs previous=prevBroochs next=nextBroochs}}
+			<div class="row">
+	            {{> PageButtons hasElements=hasBrooch previous=prevBroochs next=nextBroochs}}
 	            <div class="{{#if hasBroochs}}col s12 m4 l4{{/if}}">
-	            {{#if isInRole 'teacher'}} 
-	                {{> AddButton add=addBrooch}} <!-- -->
-	            {{/if}}
+	            	{{#if isInRole 'teacher'}} 
+	                	{{> AddButton add=addBrooch}} 
+	            	{{/if}}
 	            </div>
 	        </div>
 	    </div>

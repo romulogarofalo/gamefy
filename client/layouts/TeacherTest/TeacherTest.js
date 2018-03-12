@@ -144,8 +144,24 @@ Template.TeacherTest.events({
          const new_timeframe = {start_time: start_time, end_time: end_time}
 
          Meteor.call('tests.updateTime', test_id, new_timeframe, function(error, success) { 
-             if (success) { 
-                  //TO DO: adicionar mensagem de sucesso
+             if(error){
+                 console.log(error)
+                 if(error.error == 'not-enough-questions'){
+                     alert('O questionário deve possuir ao menos 5 questões');
+                 }
+                 else{
+                    if(error.error == 'invalid-timeframe'){
+                        alert('Esta janela de tempo não existe. Por favor verifique as datas e horas');
+                    }
+                    else{
+                        if(error.error == 'test-already-published'){
+                            alert('Este teste já foi publicado e não pode mais ser editado')
+                        }
+                    }
+                 }
+             }
+             else{ 
+                  Materialize.toast('Janela de tempo do questionário definida!', 3000);
              } 
          });
      },

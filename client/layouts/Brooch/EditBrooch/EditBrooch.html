@@ -3,16 +3,21 @@
         <div class="modal-content">
             <h3>Editar Broche</h3>
             <form class="edit-brooch-form">
-                <input type="text" name="name" placeholder="Nome" id="nameBrooch" />
-                <input type="text" name="description" placeholder="Descrição" id="descriptionBrooch" />
-                <input type="file" name="image" placeholder="foto" id="imageBrooch" />
+                <div class="input-field">
+                    <input type="text" name="name" id="name-edit" required="" aria-required="true"/>
+                    <label for="name" class="active">Nome</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" name="description"  id="description-edit" required="" aria-required="true"/>
+                    <label for="description" class="active">Descrição</label>
+                </div>
 
                 <span style="display:none" id="spanId"></span>
 
-                <button class="btn waves-effect waves-light" name="action" id="cancela">Cancelar
+                <button class="btn waves-effect waves-light" id="cancela">Cancelar
                     <i class="material-icons right">cancel</i>
                 </button>
-                <button class="btn waves-effect waves-light right" type="submit" name="action" id="atualiza">Atualizar
+                <button class="btn waves-effect waves-light right" type="submit" name="action">Atualizar
                     <i class="material-icons right">autorenew</i>
                 </button>
 

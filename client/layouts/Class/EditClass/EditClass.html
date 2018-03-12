@@ -3,12 +3,18 @@
         <div class="modal-content">
             <h3>Editar Classe</h3>
             <form class="edit-class-form">
-                <input type="text" name="name" placeholder="Nome" id="nomeClasse" />
-                <input type="text" name="description" placeholder="Descrição" id="descricaoClasse" />
+                <div class="input-field">
+                    <input type="text" name="name" id="nomeClasse" required="" aria-required="true" />
+                    <label for="nomeClasse" class="active">Nome</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" name="description" id="descricaoClasse" required="" aria-required="true" />
+                    <label for="descricaoClasse" class="active">Descrição</label>
+                </div>
 
                 <span style="display:none" id="spanId"></span>
 
-                <button class="btn waves-effect waves-light" type="submit" name="action" id="cancela">Cancelar
+                <button class="btn waves-effect waves-light" id="cancela" >Cancelar
                     <i class="material-icons right">cancel</i>
                 </button>
                 <button class="btn waves-effect waves-light right" type="submit" name="action" id="atualiza">Atualizar

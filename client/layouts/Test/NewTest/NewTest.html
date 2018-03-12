@@ -1,24 +1,24 @@
 <template name="NewTest">
     <div id="new-test" class="modal">
         <div class="modal-content">
-            <h4>Novo teste</h4>
+            <h4>Novo questionário</h4>
             <form class="new-test-form">
                 <div class="row">
                     <div class="input-field">
-                        <input type="text" id="name" name="name" />
-                        <label for="name">Nome do Teste</label>
+                        <input type="text" id="name" name="name" required="" aria-required="true"/>
+                        <label for="name" class="active">Nome do Teste</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
                         <div class="input-field">
-                            <input type="number" id="points" name="points" min="0" step="1" max="1000"/>
+                            <input type="number" id="points" name="points" min="0" step="1" max="1000" required="" aria-required="true"/>
                             <label for="points">Pontos (Maximo de 1000)</label>
                         </div>
                     </div>
                 </div>
                 <div class="input-field">
-                    <textarea id="description" name="description" class="materialize-textarea"></textarea>
+                    <textarea id="description" name="description" class="materialize-textarea" required="" aria-required="true"></textarea>
                     <label for="description">Descrição</label>
                 </div>
                 <button class="btn waves-effect waves-light" type="submit" name="action">Enviar

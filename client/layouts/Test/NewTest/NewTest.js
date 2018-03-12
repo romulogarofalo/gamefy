@@ -18,7 +18,11 @@ Template.NewTest.events({
 
     //chamo o metodo insert na API TestCollection no servidor
     Meteor.call('tests.insert', new_test, (error, result) => {
-            if(!error){
+            if(error){
+                alert("Por favor preencha todos os campos")
+            }
+            else{
+                Materialize.toast('Questionário criado com Sucesso!', 3000);
                 $('#new-test').modal('close');
                 template.find(".new-test-form").reset();
             }

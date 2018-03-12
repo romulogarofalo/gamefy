@@ -121,7 +121,7 @@ Template.NewClass.events({
                 });
             }
         });
-        
+        Materialize.toast('Classe Criada com Sucesso!', 3000);
         template.find(".new-class-form").reset();
         $('#new-class').modal('close');
 
