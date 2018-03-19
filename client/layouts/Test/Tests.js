@@ -37,7 +37,8 @@ Template.Tests.helpers({
     },
 
     studentHasTest: () => {
-        return Enrollments.findOne({}).tests.count() > 0
+        console.log(Enrollments.findOne({}).tests)
+        return Enrollments.findOne({}).tests.length > 0
     },
 
     //retorna os questionários da classe para usar no each

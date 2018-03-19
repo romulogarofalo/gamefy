@@ -43,7 +43,7 @@ Meteor.setInterval(function() {
                 html: `<h4>Bom dia ${enrollment.student_name}</h4>. 
                           <p>Um novo questionário está disponível para você na sala ${class_name}  
                           até a hora ${test.end_time.getHours()} : ${test.end_time.getHours()}
-                          do dia ${test.end_time.getDay()} de ${months[test.end_time.getMonth()]}</p>
+                          do dia ${test.end_time.getDate()} de ${months[test.end_time.getMonth()]}</p>
 
                           <p>Até logo, e bons estudos</p>
 
