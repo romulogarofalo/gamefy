@@ -25,7 +25,10 @@
     {{#each testQuestion}}
       {{> Question}}
     {{/each}}
-     {{/if}}
+    {{else}}
+      <div class="loading-page">
+    	</div>
+    {{/if}}
     <div class="divider"></div>
     <div class="section">
       <form class="save-test-form">

@@ -16,9 +16,6 @@ Template.ClassSingle.onCreated(function() {
 //inicializo e configuro os elementos de UI do Materialize
 Template.ClassSingle.onRendered(function() {
     $('.modal').modal();
-    $('ul.tabs').tabs();
-    $(".tabs>.indicator").css("background-color", 'green');
-
 });
 
 
@@ -31,6 +28,10 @@ Template.ClassSingle.helpers({
         tab = tab.charAt(0).toUpperCase() + tab.slice(1);
         console.log(tab);
         return tab;
+    },
+
+    username: () => {
+        return Meteor.user().profile.name; 
     },
 
     class: ()=>{

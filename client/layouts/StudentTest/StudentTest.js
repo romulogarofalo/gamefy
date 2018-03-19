@@ -124,6 +124,8 @@ Template.StudentTest.events({
 
     //finaliza o teste, verificando se todas as questões foram respondidas
     'click #finish-test':  function (event, instance) {
+        
+        if(confirm("Deseja mesmo finalizar o teste?")){
         const student_answers = Session.get('answers')
         const questions = Tests.findOne().questions;
 
@@ -149,5 +151,6 @@ Template.StudentTest.events({
             }
             FlowRouter.go('/class/' + Tests.findOne().class_id)
         });
+      }
     }
 });

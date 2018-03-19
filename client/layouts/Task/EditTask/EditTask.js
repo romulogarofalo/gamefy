@@ -1,13 +1,13 @@
 Template.EditTask.events({
-    'click #cancel': function (event, instance) {
+    'click #cancel-task-edit': function (event, instance) {
         event.preventDefault();
         $('#edit-task').modal('close');
     },
 
     'submit .edit-task-form': function (event, template) {
         event.preventDefault();
-        let name = $('#name-task').val();
-        let desc = $('#description-task').val();
+        let name = $('#name-task-edit').val();
+        let desc = $('#description-task-edit').val();
         let task_id = $('#task-id').val();
         console.log(task_id)
         Meteor.call('tasks.update', name, desc, task_id);

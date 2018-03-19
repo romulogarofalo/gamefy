@@ -32,6 +32,14 @@ Template.Tests.helpers({
         }
     },
 
+    teacherHasTest: () => {
+        return Tests.find({}).count() > 0; 
+    },
+
+    studentHasTest: () => {
+        return Enrollments.findOne({}).tests.count() > 0
+    },
+
     //retorna os questionários da classe para usar no each
     testsTeacher: ()=>{
         return Tests.find({},{sort: {createdAt: -1}}); 

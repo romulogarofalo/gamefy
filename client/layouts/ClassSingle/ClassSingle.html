@@ -1,4 +1,5 @@
 <template name="ClassSingle">
+    {{#if Template.subscriptionsReady}}
     {{#if isInRole 'teacher'}}
         {{> NewEnrollment}}
         {{> NewTask}}
@@ -30,4 +31,10 @@
             {{> Template.dynamic template=tab data=tabData}}
         </div>
     </div>
+    <div class="whitespace-box">
+    </div>
+    {{else}}
+        <div class="loading-page">
+        </div>
+    {{/if}}
 </template>

@@ -58,5 +58,6 @@ AccountsTemplates.addFields([
         re: /(?=.*[A-Z])(?=.*[a-z])/,
         errStr: 'O nome Precisa ter pelo menos uma letra minuscula e uma maiuscula',
     },
+
 ]);
 

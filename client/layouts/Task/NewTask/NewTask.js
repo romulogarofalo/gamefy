@@ -1,3 +1,10 @@
+Template.NewTask.onCreated(function() {
+    //crio uma variavel reativa para impedir submit duplicado
+    this.state = new ReactiveDict();
+    const instance = Template.instance();
+    instance.state.set('disable', false);
+});
+
 Template.NewTask.onRendered(function () {
 
     //cria e configura o datepicker para selecionar o prazo
@@ -16,12 +23,20 @@ Template.NewTask.onRendered(function () {
     });
 });
 
+Template.NewTask.helpers({
+    buttonDisabled: () => {
+        return Template.instance().state.get('disable')
+    }
+});
+
 
 Template.NewTask.events({
 
 'submit .new-task-form': function(event, template) {
     
     event.preventDefault();
+
+    template.state.set('disable', true)
  
     const target = event.target;
     const id = FlowRouter.getParam('id');
@@ -47,6 +62,7 @@ Template.NewTask.events({
                 Materialize.toast('Tarefa Criada com Sucesso!', 3000);
                 $('#new-task').modal('close');
                 template.find(".new-task-form").reset();
+                template.state.set('disable', false)
             }
         });
          

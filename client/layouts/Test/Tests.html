@@ -1,6 +1,6 @@
 <template name="Tests">
-    <div class="indigo lighten-1">
-        <div class="collection scrollable">
+    <div class="indigo darken-3">
+        <div class="collection">
             <div class="collection-header">
                 <div class="row">
                     <div class="col s10">
@@ -9,37 +9,58 @@
                     <div class="col s2">
                         <i class="large material-icons white-text title-icon">check</i>
                     </div>
-                </div>
+                </div> 
             </div>
-            {{#if isInRole 'teacher'}}
-                {{#each testsTeacher}}
-                <div class="collection-item avatar">
-                    <a href="/test/{{_id}}">
-                        <span class="title">{{name}}</span>
-                        <p class="task-points indigo-text text-darken-3">{{points}} </p>
-                        <p>{{publishStatus _id}}</p>
-                    </a>
-                    <div>
-                    <a class="secondary-content delete-test"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
-                    <a class="secondary-content edit-test"><i class="medium black-text material-icons" id="{{_id}}">edit</i></a>
-                    </div>
-                </div>
-                {{/each}}
-            {{else}}
-                {{#each testsStudent}}
-                    {{#if testPublished test_id}}                
+            {{#if Template.subscriptionsReady}}
+                <div class="scrollable">
+                {{#if isInRole 'teacher'}}
+                    {{#if teacherHasTest}}
+                        {{#each testsTeacher}}
+                            <div class="collection-item avatar">
+                                <a href="/test/{{_id}}">
+                                    <span class="title">{{name}}</span>
+                                    <p class="task-points indigo-text text-darken-3">{{points}} </p>
+                                    <p>{{publishStatus _id}}</p>
+                                </a>
+                                <div>
+                                    <a class="secondary-content delete-test"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
+                                    <a class="secondary-content edit-test"><i class="medium black-text material-icons" id="{{_id}}">edit</i></a>
+                                </div>
+                            </div>
+                        {{/each}}
+                    {{else}}
                         <div class="collection-item avatar">
-                            <a href="/test/{{test_id}}">
-                                <span class="title">{{testName test_id}}</span>
-                                <p class="task-points indigo-text text-darken-3">Valor: {{max_points}} </p>
-                                <p class="indigo-text text-darken-3">Você{{#if done}} já realizou{{else}} ainda não realizou{{/if}} este teste</p>
-                                {{#if done}}
-                                    <p class="indigo-text text-darken-3">Sua pontuação: {{points}} pontos</p>
-                                {{/if}}
-                            </a>
+                            <h1>Você ainda não adicionou nenhum questionário</h1>
                         </div>
                     {{/if}}
+            {{else}}
+                {{#if studentHasTest}}
+                {{#each testsStudent}}
+                        {{#if testPublished test_id}}                
+                            <div class="collection-item avatar">
+                                <a href="/test/{{test_id}}">
+                                    <span class="title">{{testName test_id}}</span>
+                                    <p class="task-points indigo-text text-darken-3">Valor: {{max_points}} </p>
+                                    <p class="indigo-text text-darken-3">Você{{#if done}} já realizou{{else}} ainda não realizou{{/if}} este teste</p>
+                                    {{#if done}}
+                                        <p class="indigo-text text-darken-3">Sua pontuação: {{points}} pontos</p>
+                                    {{/if}}
+                                </a>
+                            </div>
+                        {{/if}}
                 {{/each}}
+                {{else}}
+                    <div class="collection-item avatar">
+                        <h1>Você ainda não possui nenhum questionário</h1>
+                    </div>
+                {{/if}}
+            {{/if}}
+            </div>
+            {{else}}
+            <div class="collection-item avatar">
+                <div class="loading-box">
+                </div>
+            </div>
             {{/if}}
         </div>
     </div>

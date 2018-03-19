@@ -1,6 +1,6 @@
 <template name="Tasks">
     <div class="indigo lighten-1">
-        <div class="collection scrollable">
+        <div class="collection">
             <div class="collection-header">
                 <div class="row">
                     <div class="col s10">
@@ -11,33 +11,54 @@
                     </div>
                 </div>
             </div>
+            {{#if Template.subscriptionsReady}}
+            <div class="scrollable">
             {{#if isInRole 'teacher'}}
-                {{#each tasksTeacher}}
-                <div class="collection-item avatar">
-                    <a href="/task/{{_id}}">
-                        <span class="title">{{name}}</span>
-                        <p class="task-points indigo-text text-darken-3">{{points}} </p>
-                    </a>
-                    <div>
-                    <a class="secondary-content delete-task"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
-                    <a class="secondary-content edit-task"><i class="medium black-text material-icons" id="{{_id}}">edit</i></a>
+                {{#if hasTask}}
+                    {{#each tasksTeacher}}
+                        <div class="collection-item avatar">
+                            <a href="/task/{{_id}}">
+                                <span class="title">{{name}}</span>
+                                <p class="task-points indigo-text text-darken-3">{{points}} </p>
+                            </a>
+                        <div>
+                            <a class="secondary-content delete-task"><i class="medium red-text material-icons" id="{{_id}}">delete</i></a>
+                            <a class="secondary-content edit-task"><i class="medium black-text material-icons" id="{{_id}}">edit</i></a>
+                        </div>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <div class="collection-item avatar">
+                        <h1>Você ainda não adicionou nenhuma tarefa</h1>
                     </div>
-                </div>
-                {{/each}}
+                {{/if}}
             {{else}}
-                {{#each tasksStudent}}
-                <div class="collection-item avatar">
-                    <span class="title">{{taskName task_id}}</span>
-                        <p>Valor: {{max_points}} pontos</p>
-                    {{#if taskDone task_id}}
-                         <p>Sua pontuação: {{points}} pontos</p>
-                         <i class="medium material-icons secondary-content">check</i>
-                    {{else}}
-                         <p>Você ainda não fez essa tarefa. Ela deve ser entregue até: {{dateFormat task_id}}</p>
-                         <i class="medium material-icons secondary-content">check_box_outline_blank</i>
-                    {{/if}}
+                {{#if hasTask}}
+                    {{#each tasksStudent}}
+                        <div class="collection-item avatar">
+                            <span class="title">{{taskName task_id}}</span>
+                            <p>Valor: {{max_points}} pontos</p>
+                            {{#if taskDone task_id}}
+                                <p>Sua pontuação: {{points}} pontos</p>
+                                <i class="medium material-icons secondary-content">check</i>
+                            {{else}}
+                                <p>Você ainda não fez essa tarefa. Ela deve ser entregue até: {{dateFormat task_id}}</p>
+                                <i class="medium material-icons secondary-content">check_box_outline_blank</i>
+                            {{/if}}
+                        </div>      
+                    {{/each}}
+                 {{else}}
+                    <div class="collection-item avatar">
+                        <h1>Você ainda não possui nenhuma tarefa</h1>
+                    </div>
+                {{/if}}
+            {{/if}}
+            </div>
+            {{else}}
+            <div class="collection-item avatar">
+                <div class="loading-box">
                 </div>
-                {{/each}}
+            </div>
             {{/if}}
         </div>
     </div>

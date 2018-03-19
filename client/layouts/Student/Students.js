@@ -27,6 +27,10 @@ Template.Students.helpers({
         return instance.state.get('orderBy') === 'alphabetic';
     },
 
+    hasStudent:() =>{
+        return Enrollments.find({}).count() > 0
+    },
+
     //verifico se o tipo de ordenação atual é por pontos
     isRanking:()=>{
         const instance = Template.instance();

@@ -141,7 +141,8 @@ if (Meteor.isServer) {
                     student_name: student.profile.name,
                     class_id: enrollment_attempt.class_id, 
                     points: 0, 
-                    badges: []
+                    badges: [],
+                    tests: []
                 };
             
             Enrollments.insert(new_enrollment, function(err, enrollment_id){ 

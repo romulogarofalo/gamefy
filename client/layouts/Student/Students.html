@@ -3,7 +3,7 @@
     <a class="waves-effect waves-light btn alphabetic {{#if isAlphabetic}}disabled{{/if}}">A-Z</a>
     <a class="waves-effect waves-light btn ranking {{#if isRanking}}disabled{{/if}}">Ranking</a>
     </div>
-    <div class="collection cyan darken-3 scrollable">
+    <div class="collection green accent-4">
         <div class="collection-header">
             <div class="row">
                 <div class="col s10">
@@ -14,15 +14,29 @@
                 </div>
             </div>
         </div>
-            {{#if isAlphabetic}}
-                {{#each studentsAlphabetic}}
-                    {{> Student}}
-                {{/each}}
+        {{#if Template.subscriptionsReady}}
+            {{#if hasStudent}}
+            <div class="scrollable">
+                {{#if isAlphabetic}}
+                    {{#each studentsAlphabetic}}
+                        {{> Student}}
+                    {{/each}}
+                {{else}} 
+                    {{#each studentsRanking}}
+                        {{> Student}}
+                    {{/each}}
+                {{/if}}
+            </div>
             {{else}}
-                {{#each studentsRanking}}
-                    {{> Student}}
-                {{/each}}
+                <div class="collection-item avatar">
+                    <h1>Você ainda não adicionou nenhum aluno</h1>
+                </div>
             {{/if}}
+        {{else}}
+        <div class="collection-item avatar">
+            <div class="loading-box"></div>
+        </div>
+        {{/if}}
     </div>
     {{#if isInRole 'teacher'}}
         {{> AddButton add=addEnrollment}}

@@ -21,3 +21,15 @@
 .edit-test{
     margin-right: 70px
 }
+
+.loading-box{
+    min-height: 200px
+}
+
+.whitespace-box{
+    min-height: 200px
+}
+
+.loading-page{
+    min-height: 800px
+}

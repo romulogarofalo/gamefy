@@ -19,9 +19,9 @@ Meteor.publish('classes', function() {
 });
 
 Meteor.publish('students', function(class_id) {
-    return Enrollments.find({
+    return [Enrollments.find({
         class_id: class_id
-    });
+    }), Meteor.users.find({}, {fields: {'profile.avatar': 1}})];
 });
 
 Meteor.publish('tasks', function(class_id) {

@@ -1,5 +1,6 @@
 <template name="Student">
-    <a href="#!" class="collection-item {{#if isCurrentUser student_id}} yellow lighten-5 {{/if}}">
+    <a href="#!" class="collection-item avatar{{#if isCurrentUser student_id}} yellow lighten-5 {{/if}}">
+        <img src="{{#if hasImage student_id}} {{imageFile student_id}} {{else}}/img/default_avatar.png{{/if}}" alt="" class="circle">
         <span class="title">{{student_name}}</span>
         <span class="badge rank">{{ranking points}} </span>
         <p class="red-text">

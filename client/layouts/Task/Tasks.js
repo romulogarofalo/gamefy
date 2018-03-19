@@ -14,6 +14,10 @@ Template.Tasks.helpers({
       }
     },
 
+    hasTask: ()=>{
+        return Tasks.find({}).count() > 0
+    },
+
     tasksTeacher: ()=>{
         return Tasks.find({}, {sort: {createdAt: -1}}); 
     },
@@ -70,8 +74,8 @@ Template.Tasks.events({
         const description = task.description
         $('#edit-task').modal('open');
         document.querySelector('#task-id').value = task_id;
-        document.querySelector('#name-task').value = name;
-        document.querySelector('#description-task').value = description;
+        document.querySelector('#name-task-edit').value = name;
+        document.querySelector('#description-task-edit').value = description;
         $('#name').focus();
     },
 
