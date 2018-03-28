@@ -2,3 +2,39 @@
     max-height: 300px;
     max-width: 300px;
 }
+
+.container-90{
+    width: 95%;
+    margin: 0 auto
+}
+
+.container-70{
+    width: 70%;
+    margin: 0 auto
+}
+
+.long-paragraph{
+   word-wrap: break-word;
+   font-size: 18px     
+}
+
+.img-container{
+    max-width: 100%
+}
+
+.border{
+    border: 2px solid black
+}
+
+.test-state{
+    font-size: 22px
+}
+
+.purple-gradient-bg{
+    background: linear-gradient(to right, rebeccapurple , purple);
+}
+
+.thin-border{
+    border: 0.5px groove black
+}
+

@@ -1,3 +1,8 @@
 .enter{
-    background-image:  url("http://cdn.3plearning.com/wp-content/uploads/sites/7/2017/03/Shutterstock-gamification-banner-4-of-4.png");
+    background-image: url("img/main_bg.jpg");
+    background-position: center;
+}
+
+.semi-opaque{
+    opacity: 0.95;
 }

@@ -70,6 +70,11 @@ Template.StudentTest.helpers({
         return Tests.findOne({}).questions[index]; 
     },
 
+    notLastQuestion(){
+        const instance = Template.instance(); 
+        return Tests.findOne({}).questions.length - 1 !== instance.state.get('question');
+    },
+
     questionNumber(){
         const instance = Template.instance();
         const index = instance.state.get('question');

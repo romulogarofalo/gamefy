@@ -2,6 +2,8 @@
   function setDatePickers(){      
         let start_time = Tests.findOne({}).start_time
         let end_time = Tests.findOne({}).end_time
+        console.log(start_time)
+        console.log(end_time)
         if(start_time && end_time){
             let $input = $('#start_date').pickadate()
             let picker = $input.pickadate('picker')
@@ -49,7 +51,6 @@ Template.TeacherTest.onRendered(function() {
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
-        min: new Date(),
         closeOnSelect: false, 
     });
 
@@ -59,7 +60,6 @@ Template.TeacherTest.onRendered(function() {
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
-        min: new Date(),
         closeOnSelect: false,
     });
 
@@ -198,9 +198,11 @@ Template.TeacherTest.events({
             marked = false
             if(value.number === question.correct_answer){
                 marked = true
+                $('#' + "answer" + (value.number)).prop('checked', true)
             }
             answer_list.push({answer_text: value.answer_text, answer_name: "answer" + (value.number), marked: marked})
         });
+        console.log(answer_list)
         template.state.set('answerList', answer_list);
 
         $('#edit-question').modal('open');

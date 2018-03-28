@@ -1,10 +1,9 @@
 <template name="Question">
-<div class="divider"></div>
-    <div class="section">
-      <div class="row">
-        <div class="col s5">
+<div class="card-panel z-depth-4 white lighten-5 rounded">
+  <div class="row">
+        <div class="col s4">
           <div class="question-image">
-            <img class="responsive-img" src="{{imageFile imageName}}">
+            <img class="responsive-img border" src="{{imageFile imageName}}">
           </div>
         </div>
         <div class="col s6">
@@ -14,16 +13,16 @@
           {{#each questionAnswers answers}}
             <p>
               <input name="saved-question-{{questionNumber}}" type="radio" id="{{number}}" checked="{{isCorrect number}}" disabled/>
-              <label for="{{number}}" >{{answer_text}}</label>
+              <label for="{{number}}" class="long-answer black-text" >{{answer_text}}</label>
             </p>
           {{/each}}
           </div>
-         <div class="col s1">
+         <div class="col offset-s1 s1">
            {{#if testEditable}}
                <a class="delete-question"><i class="medium red-text material-icons">delete</i></a>
                <a class="edit-question"><i class="medium black-text material-icons">edit</i></a>
            {{/if}}
-         </div>  
+         </div>
+        </div>  
       </div>
-    </div>
 </template>

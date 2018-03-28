@@ -4,32 +4,40 @@
     {{#if Template.subscriptionsReady}}
     <div class="section">
         <div class="row">
-          <div class="col s4">  
-                <a href="/class/{{testClass}}" class="waves-effect waves-light btn-large"><i class="material-icons left white-text">arrow_back</i>Voltar</a>
+          <div class="col s2">  
+                <a href="/class/{{testClass}}" class="waves-effect waves-light blue accent-2 btn-large"><i class="material-icons left white-text">keyboard_return</i>Voltar</a>
           </div>
-          <div class="col s4"> 
+          <div class="col s8 center-align"> 
             <h3>Questionário: {{testName}}</h3>
           </div>
         </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
         <div class="row">
-          <div class="center-align">
-            <p>{{testDescription}}</p>
+          <div class="col offset-s2 s8">
+          <div class="center-align long-paragraph">
+            <p><b>Descrição:</b> {{testDescription}}</p>
+          </div>
           </div>
         </div>
         <div class="row">
           <div class="center-align">
-            <p>Este teste {{#if testEditable}}ainda não foi publicado e pode{{else}}já foi publicado e não pode{{/if}} ser editado</p>
+            <p class= "red-text test-state">Este teste {{#if testEditable}}ainda não foi publicado e pode{{else}}já foi publicado e não pode{{/if}} ser editado</p>
           </div>
         </div>
     </div>
+    <div class="card-panel light-purple-gradient-bg">
+    <div class="container-90">
     {{#each testQuestion}}
       {{> Question}}
     {{/each}}
+    </div>
+    </div>
     {{else}}
       <div class="loading-page">
     	</div>
     {{/if}}
-    <div class="divider"></div>
     <div class="section">
       <form class="save-test-form">
         <div class="row">

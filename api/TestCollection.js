@@ -245,7 +245,7 @@ Meteor.methods({
             });
 
             //calculo a pontuação final do aluno
-            const student_points = (correct_answers / questions.length) * max_points
+            const student_points = Math.floor((correct_answers / questions.length) * max_points)
 
             const enrollment = Enrollments.findOne({
                 student_id: user_id,

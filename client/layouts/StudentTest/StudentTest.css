@@ -1,0 +1,20 @@
+.question-img{
+    max-height: 60%
+}
+
+.light-purple-gradient-bg{
+    background: linear-gradient(to right, mediumpurple , rebeccapurple);
+}
+
+.finish-test{
+    margin-top: 15px
+}
+
+.back-btn{
+    margin-top: 15%
+}
+
+.statement{
+   word-wrap: break-word;
+   font-size: 18px     
+}

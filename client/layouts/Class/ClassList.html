@@ -1,35 +1,28 @@
-
 <template name="ClassList">
-{{#if Template.subscriptionsReady}}
-    {{#if isInRole 'teacher'}}
-        {{> NewClass}}
-        {{> EditClass}}
-    {{/if}}
+    {{#if Template.subscriptionsReady}} {{#if isInRole 'teacher'}} {{> NewClass}} {{> EditClass}} {{/if}}
     <div class="section">
         <h2 class="center-align">Bem vindo, {{username}}</h2>
     </div>
     <div class="divider"></div>
     <div class="section">
-    {{#if hasClasses}}
-        <div class="row">
-            {{#each classes}}
-                {{> Class}}
-            {{/each}}
-        </div>
-    {{else}}
-            <h3 class="center-align">Você ainda não{{#if isInRole 'teacher'}} criou {{else}} está inscrito em{{/if}} nenhuma classe</h3>
-    {{/if}}
-    </div>
-        <div class="row">
-            {{> PageButtons hasElements=hasClasses previous=prevClasses next=nextClasses}}
-            <div class="{{#if hasClasses}}col s12 m4 l4{{/if}}">
-            {{#if isInRole 'teacher'}}
-                {{> AddButton add=addClass}}
-            {{/if}}
+        <div class="card-panel gamefy-bg">
+            {{#if hasClasses}}
+            <div class="row">
+                {{#each classes}} {{> Class}} {{/each}}
             </div>
+            {{else}}
+            <h3 class="center-align">Você ainda não{{#if isInRole 'teacher'}} criou {{else}} está inscrito em{{/if}} nenhuma classe</h3>
+            {{/if}}
         </div>
-{{else}}
-        <div class="loading-page">
+    </div>
+    <div class="row">
+        {{> PageButtons hasElements=hasClasses previous=prevClasses next=nextClasses}}
+        <div class="{{#if hasClasses}}col s12 m4 l4{{/if}}">
+            {{#if isInRole 'teacher'}} {{> AddButton add=addClass}} {{/if}}
         </div>
-{{/if}}
+    </div>
+    {{else}}
+    <div class="loading-page">
+    </div>
+    {{/if}}
 </template>
