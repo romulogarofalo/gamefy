@@ -8,15 +8,21 @@
         {{> EditTest}}
         {{> TestChart}}
     {{/if}}
-    <div class="section">
+    <div class="section class-bg">
         <div class="row">
-          <div class="col s4">  
-                <a href="/main" class="waves-effect waves-light btn-large blue accent-2"><i class="material-icons left white-text">keyboard_return</i>Voltar</a>
+          <div class="col l4 s12">  
+                <a href="/main" class="waves-effect waves-light btn-large teal"><i class="material-icons left white-text">keyboard_return</i>Voltar</a>
           </div>
-          <div class="col s4"> 
-            <h3>Classe: {{class.name}}</h3>
+          <div class="col l4 s12 center-align"> 
+              <div class="card grey lighten-4 rounded semi-opaque">
+                  <div class="card-content">
+                      <h3>Classe: {{class.name}}</h3>
+                      <span>Descrição {{class.description}}</span>
+                 </div> 
+                    
+              </div>
           </div>
-          <div class="col s4">
+          <div class="col l4 s12">
                 {{#if isInRole 'teacher'}} 
                     <a class="waves-effect waves-light btn-large right" id="create-report"><i class="material-icons right white-text">assessment</i>Gerar Relatório</a>
                 {{/if}}
@@ -24,15 +30,15 @@
         </div>
     </div>
     <div class="divider"></div>
+    <!--<div class="card-panel grey lighten-5">-->
     <div class="section">
-        <div class="row">
             {{> ClassTabs}}
             <!--Verificar se o tabData é necessario-->
             {{> Template.dynamic template=tab data=tabData}}
-        </div>
     </div>
     <div class="whitespace-box">
     </div>
+    <!--</div>-->
     {{else}}
         <div class="loading-page">
         </div>

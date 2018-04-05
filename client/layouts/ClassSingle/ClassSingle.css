@@ -1,0 +1,9 @@
+.class-bg{
+    background-image: url("img/class-bg-3.png");
+    background-position: bottom;
+}
+
+round-title{
+    border-radius: 80%;
+    padding-right: 3px
+}

@@ -27,6 +27,7 @@
           </div>
         </div>
     </div>
+    {{#if hasQuestions}}
     <div class="card-panel light-purple-gradient-bg">
     <div class="container-90">
     {{#each testQuestion}}
@@ -34,6 +35,7 @@
     {{/each}}
     </div>
     </div>
+    {{/if}}
     {{else}}
       <div class="loading-page">
     	</div>

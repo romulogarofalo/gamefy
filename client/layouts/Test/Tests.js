@@ -37,7 +37,6 @@ Template.Tests.helpers({
     },
 
     studentHasTest: () => {
-        console.log(Tests.find({status: 1}).fetch())
         return Tests.find({status: 1}).fetch().length > 0
     },
 

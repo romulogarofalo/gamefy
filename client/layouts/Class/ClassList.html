@@ -4,8 +4,7 @@
         <h2 class="center-align">Bem vindo, {{username}}</h2>
     </div>
     <div class="divider"></div>
-    <div class="section">
-        <div class="card-panel gamefy-bg">
+    <div class="section gamefy-bg">
             {{#if hasClasses}}
             <div class="row">
                 {{#each classes}} {{> Class}} {{/each}}
@@ -13,7 +12,6 @@
             {{else}}
             <h3 class="center-align">Você ainda não{{#if isInRole 'teacher'}} criou {{else}} está inscrito em{{/if}} nenhuma classe</h3>
             {{/if}}
-        </div>
     </div>
     <div class="row">
         {{> PageButtons hasElements=hasClasses previous=prevClasses next=nextClasses}}
