@@ -286,6 +286,7 @@ Meteor.methods({
             }).fetch();
 
             const latest_tests = Tests.find({
+                class_id: class_id,
                 status: 2
             }, {
                 sort: {
