@@ -2,9 +2,11 @@
 <div class="card-panel z-depth-4 white lighten-5 rounded">
   <div class="row">
         <div class="col s4">
+          {{#if hasImage imageName}}
           <div class="question-image">
             <img class="responsive-img border" src="{{imageFile imageName}}">
           </div>
+          {{/if}}
         </div>
         <div class="col s6">
           <span class="black-text">

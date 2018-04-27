@@ -34,6 +34,7 @@ Meteor.setInterval(function() {
             { $push: {tests: { test_id: test._id, done: false, max_points: test.points}}
         },{ multi: true });
         const class_name = Classes.findOne({_id: test.class_id}).name
+        try{
         Enrollments.find({class_id: test.class_id}).forEach(function (enrollment) {
           const email = Meteor.users.findOne({_id: enrollment.student_id}).emails[0].address
           Email.send({
@@ -50,6 +51,10 @@ Meteor.setInterval(function() {
                           <p>Gamify School</p>`,
             });
         })
+        }
+        catch(error){
+          console.log(error)
+        }
     });
 
     Tests.update(

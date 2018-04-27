@@ -1,17 +1,15 @@
 <template name="StudentTest">
-  {{#if Template.subscriptionsReady}} 
-    {{#if testPublished}} 
-      {{#if testPending}}
-    <div class="row">
-      <div class="col l2 s4 offset-s4">
-        <a class="waves-effect waves-light blue accent-2 back-btn btn-large" href="/class/{{testClass}}"><i class="material-icons left white-text">keyboard_return</i>Voltar</a>
-      </div>
-      <div class="col l8 center-align s12">
-        <h3>Questionário: {{testName}}</h3>
-        <p class="center-align long-paragraph">{{testDescription}}</p>
-      </div>
+  {{#if Template.subscriptionsReady}}
+  <div class="row">
+    <div class="col l2 s4 offset-s4">
+      <a class="waves-effect waves-light blue accent-2 back-btn btn-large" href="/class/{{testClass}}"><i class="material-icons left white-text">keyboard_return</i>Voltar</a>
     </div>
-  {{#with testQuestion}}
+    <div class="col l8 center-align s12">
+      <h3>Questionário: {{testName}}</h3>
+      <p class="center-align long-paragraph">{{testDescription}}</p>
+    </div>
+  </div>
+  {{#if testPublished}} {{#if testPending}} {{#with testQuestion}}
   <div class="card-panel purple-gradient-bg">
     <div class="container">
       <div class="card-panel z-depth-4 grey lighten-5 rounded">
@@ -43,17 +41,18 @@
   </div>
   {{/with}}
   <div class="row">
-      <div class="col offset-s5 s2 center-align">
-          <a class="waves-effect waves-light btn-large green right {{#if notLastQuestion}}disabled{{/if}}" id="finish-test"><i class="material-icons right white-text">send</i>Finalizar Teste</a>
-      </div>
+    <div class="col offset-s5 s2 center-align">
+      <a class="waves-effect waves-light btn-large green right {{#if notLastQuestion}}disabled{{/if}}" id="finish-test"><i class="material-icons right white-text">send</i>Finalizar Teste</a>
+    </div>
   </div>
   {{else}}
-  <h3>Você já realizou esse teste</h3>
+  <div class="divider"></div>
+  <h3 class="center-align">Você já realizou esse teste</h3>
   {{/if}} {{else}}
-  <h3> Esse teste não está mais disponível</h3>
-  {{/if}} 
-  {{else}}
-    <div class="loading-page">
-    </div>
+  <div class="divider"></div>
+  <h3 class="center-align"> Esse teste não está mais disponível</h3>
+  {{/if}} {{else}}
+  <div class="loading-page">
+  </div>
   {{/if}}
 </template>

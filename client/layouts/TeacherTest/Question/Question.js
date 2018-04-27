@@ -1,6 +1,10 @@
 Template.Question.helpers({
+
+    hasImage: (imageName) => {
+        return Images.findOne({name: imageName}) !== undefined;
+    },
+
     imageFile: (imageName) => {
-        console.log(imageName)
        return Images.findOne({name: imageName}).link();
     },
 
