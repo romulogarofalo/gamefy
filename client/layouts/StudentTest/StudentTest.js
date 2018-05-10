@@ -10,6 +10,10 @@ Template.StudentTest.onCreated(function() {
     Session.set('answers', [])
 });
 
+Template.StudentTest.onRendered(function(){
+    $('html').scrollTop(0);
+});
+
 Template.StudentTest.helpers({
     //TO DO: trocar alguns desses helpers por um #with no Template
     testName: () => {

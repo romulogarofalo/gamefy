@@ -84,6 +84,7 @@ Template.TeacherTest.onRendered(function() {
         ampmclickable: true, 
         aftershow: function(){}, 
     });
+    $('html').scrollTop(0);
 });
 
 Template.TeacherTest.helpers({

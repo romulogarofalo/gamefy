@@ -92,7 +92,7 @@ Meteor.publish('enrollment-task', function(task_id){
         "tasks.task_id": task_id}, {fields: {student_name: 1, 'tasks.$': 1}
         }), 
         Tasks.find({
-            _id: task_id}, {fields:{name: 1, grade: 1, due: 1, class_id: 1}
+            _id: task_id}, {fields:{name: 1, description: 1, grade: 1, due: 1, class_id: 1}
         })];
 })  
 

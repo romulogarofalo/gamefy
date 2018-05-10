@@ -15,6 +15,16 @@ Template.TaskSingle.helpers({
     taskName(){
          return Tasks.findOne({}).name;
     },
+
+    taskDescription(){
+         return Tasks.findOne({}).description;
+    },
+
+    dateFormat: () =>{
+        const date =  Tasks.findOne({}).due
+        const options = {weekday: "long", year: "numeric", month: "numeric", day: "numeric"};
+        return date.toLocaleDateString('pt-BR', options);
+    },
     
     taskClass(){
         return Tasks.findOne({}).class_id;

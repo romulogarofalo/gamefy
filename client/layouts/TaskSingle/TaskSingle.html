@@ -2,11 +2,26 @@
     {{#if Template.subscriptionsReady}}
     <div class="section">
         <div class="row">
-          <div class="col s4">  
+          <div class="col s2">  
                 <a href="/class/{{taskClass}}" class="waves-effect waves-light btn-large"><i class="material-icons left white-text">arrow_back</i>Voltar</a>
           </div>
-          <div class="col s8"> 
+          <div class="col s8 center-align"> 
             <h3>Tarefa: {{taskName}}</h3>
+          </div>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        <div class="row">
+          <div class="col offset-s2 s8">
+          <div class="center-align long-paragraph">
+            <p><b>Descrição:</b> {{taskDescription}}</p>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="center-align">
+            <p class="test-state">Prazo: {{dateFormat}}</p>
           </div>
         </div>
     </div>
