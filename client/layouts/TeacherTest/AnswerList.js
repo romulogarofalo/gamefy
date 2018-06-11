@@ -11,6 +11,9 @@ Template.AnswerList.events({
     //adiciono uma nova resposta à answerList
     'click #add-answer': function(event, template) { 
          const answer_text = template.find('.new-answer').value
+         if(answer_text === ""){
+             return;
+         }
          let answer_list = template.data.answer_list.get('answerList')
          answer_list.push({answer_text: answer_text, answer_name: "answer" + (answer_list.length + 1), marked: false})
          template.data.answer_list.set('answerList', answer_list);

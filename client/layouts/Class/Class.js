@@ -13,6 +13,10 @@ Template.Class.helpers({
   imageFile(){
     const current_class = Classes.findOne({_id: this._id})
     return Images.findOne({name: current_class.imageName});
-  }
+  },
+
+  hasImage: (imageName) => {
+        return Images.findOne({name: imageName}) !== undefined;
+  },
 
 });
