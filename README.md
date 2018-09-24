@@ -1,4 +1,4 @@
-# gamefy
+# Gamify
 
 O Gamify School é um sistema de gamificação para salas de aula desenvolvido como TCC para o curso de Análise e Desenvolvimento de Sistemas na Fatec Rubens Lara. A plataforma tem como principal objetivo tornar a experiência dos alunos dentro da sala de aula mais lúdica através de sistemas de pontuação e broches.
 
